@@ -11,14 +11,7 @@
 
 <header class="nav">
   <div class="container nav-inner">
-    <a href="index.html" class="logo">
-      <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
-        <polygon points="50,10 26,54 74,54" fill="#F4F1E9"></polygon>
-        <polygon points="26,54 50,54 38,80" fill="#2E67D8"></polygon>
-        <polygon points="50,54 74,54 62,80" fill="#22B39B"></polygon>
-      </svg>
-      <span>TRIN&Delta;LYZE</span>
-    </a>
+    <a href="index.html" class="logo"><img src="assets/logo-official.jpg" alt="TRIN∆LYZE"></a>
     <nav class="nav-links">
       <a href="index.html" class="active">Inicio</a>
       <a href="servicios.html">Servicios</a>
@@ -34,20 +27,10 @@
 
 <section class="hero">
   <svg class="hero-bg" width="900" height="760" viewBox="0 0 900 760" aria-hidden="true">
-    <defs>
-      <linearGradient id="triA" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#2E67D8" stop-opacity="0.28"></stop>
-        <stop offset="1" stop-color="#2E67D8" stop-opacity="0.02"></stop>
-      </linearGradient>
-      <linearGradient id="triB" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#22B39B" stop-opacity="0.24"></stop>
-        <stop offset="1" stop-color="#22B39B" stop-opacity="0.02"></stop>
-      </linearGradient>
-    </defs>
-    <polygon points="620,40 900,560 340,560" fill="url(#triA)"></polygon>
-    <polygon points="780,260 900,700 560,700" fill="url(#triB)"></polygon>
-    <polygon points="420,320 620,680 220,680" fill="none" stroke="#22B39B" stroke-opacity="0.18" stroke-width="1.5"></polygon>
-    <polygon points="720,120 860,380 580,380" fill="none" stroke="#2E67D8" stroke-opacity="0.22" stroke-width="1.5"></polygon>
+    <polygon points="620,40 900,560 340,560" fill="#FFFFFF" opacity="0.05"></polygon>
+    <polygon points="780,260 900,700 560,700" fill="#FFFFFF" opacity="0.05"></polygon>
+    <polygon points="420,320 620,680 220,680" fill="none" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="1.5"></polygon>
+    <polygon points="720,120 860,380 580,380" fill="none" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.5"></polygon>
   </svg>
   <div class="container hero-grid">
     <div class="hero-copy">
@@ -56,7 +39,7 @@
       <p class="lede">Consultoría tecnológica, inteligencia artificial, automatización y business intelligence para organizaciones dominicanas y de la región que quieren competir con evidencia — no con intuición.</p>
       <div class="hero-actions">
         <a href="contacto.html" class="btn btn-primary">Solicitar diagnóstico</a>
-        <a href="soluciones.html" class="btn btn-ghost">Ver nuestro proceso</a>
+        <a href="soluciones.html" class="btn btn-ghost--onhero">Ver nuestro proceso</a>
       </div>
     </div>
 
@@ -93,9 +76,9 @@
               <stop offset="1" stop-color="#22B39B" stop-opacity="0"></stop>
             </linearGradient>
           </defs>
-          <line x1="10" y1="40" x2="290" y2="40" stroke="#223454" stroke-width="1"></line>
-          <line x1="10" y1="75" x2="290" y2="75" stroke="#223454" stroke-width="1"></line>
-          <line x1="10" y1="110" x2="290" y2="110" stroke="#223454" stroke-width="1"></line>
+          <line x1="10" y1="40" x2="290" y2="40" stroke="rgba(255,255,255,0.12)" stroke-width="1"></line>
+          <line x1="10" y1="75" x2="290" y2="75" stroke="rgba(255,255,255,0.12)" stroke-width="1"></line>
+          <line x1="10" y1="110" x2="290" y2="110" stroke="rgba(255,255,255,0.12)" stroke-width="1"></line>
           <polygon points="10,110 66,88.4 122,95.6 178,65 234,48.8 290,20 290,130 10,130" fill="url(#chartFill)"></polygon>
           <polyline points="10,110 66,88.4 122,95.6 178,65 234,48.8 290,20" fill="none" stroke="#22B39B" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></polyline>
           <circle cx="290" cy="20" r="3.5" fill="#22B39B"></circle>
@@ -107,7 +90,7 @@
   </div>
 </section>
 
-<section class="section section--panel section--divider-top">
+<section class="section">
   <div class="container grid-2">
     <div>
       <p class="eyebrow">Qué hacemos</p>
@@ -130,28 +113,31 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section section--alt section--divider-top section--divider-bottom">
   <div class="container">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
       <div>
         <p class="eyebrow">Servicios</p>
         <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:22ch;">Tres pilares, un mismo objetivo.</h2>
       </div>
-      <a href="servicios.html" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue-light);">Ver todos los servicios &rarr;</a>
+      <a href="servicios.html" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);">Ver todos los servicios &rarr;</a>
     </div>
     <div class="grid-3" style="margin-top:40px;">
       <div class="card card--service">
-        <span class="tag" style="background:rgba(46,103,216,0.16); color:#6FA0FF;">Data & Analytics</span>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="20" x2="4" y2="11"></line><line x1="12" y1="20" x2="12" y2="5"></line><line x1="20" y1="20" x2="20" y2="14"></line></svg>
+        <span class="tag" style="background:rgba(31,93,147,0.10); color:var(--blue);">Data & Analytics</span>
         <h3>Data & Analytics</h3>
         <p>Dashboards ejecutivos, analítica descriptiva y diagnóstica, gobierno de datos e indicadores que dan visibilidad real del negocio.</p>
       </div>
-      <div class="card card--service" style="border-top-color:#C9CFE0;">
-        <span class="tag" style="background:rgba(201,207,224,0.12); color:#C9CFE0;">Technology</span>
+      <div class="card card--service" style="border-top-color:var(--ink-soft);">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--ink-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"></rect><line x1="10" y1="2" x2="10" y2="7"></line><line x1="14" y1="2" x2="14" y2="7"></line><line x1="10" y1="17" x2="10" y2="22"></line><line x1="14" y1="17" x2="14" y2="22"></line><line x1="2" y1="10" x2="7" y2="10"></line><line x1="2" y1="14" x2="7" y2="14"></line><line x1="17" y1="10" x2="22" y2="10"></line><line x1="17" y1="14" x2="22" y2="14"></line></svg>
+        <span class="tag" style="background:rgba(71,83,107,0.08); color:var(--ink-soft);">Technology</span>
         <h3>Technology</h3>
         <p>Desarrollo de software, plataformas SaaS, APIs e integraciones complejas. Arquitectura pensada para escalar, no solo para lanzar.</p>
       </div>
-      <div class="card card--service" style="border-top-color:#22B39B;">
-        <span class="tag" style="background:rgba(34,179,155,0.16); color:#5FE0C6;">AI & Automation</span>
+      <div class="card card--service" style="border-top-color:var(--mint);">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.2"></circle><circle cx="18" cy="6" r="2.2"></circle><circle cx="12" cy="18" r="2.2"></circle><line x1="7.6" y1="7.4" x2="10.6" y2="16"></line><line x1="16.4" y1="7.4" x2="13.4" y2="16"></line><line x1="8.2" y1="6" x2="15.8" y2="6"></line></svg>
+        <span class="tag" style="background:rgba(23,131,111,0.10); color:var(--mint);">AI & Automation</span>
         <h3>AI & Automation</h3>
         <p>Machine learning, IA generativa, automatización de procesos y modelos predictivos que quitan trabajo manual del camino.</p>
       </div>
@@ -159,58 +145,58 @@
   </div>
 </section>
 
-<section class="section section--panel section--divider-top section--divider-bottom">
+<section class="section">
   <div class="container">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
       <div>
         <p class="eyebrow">Proyectos</p>
         <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:20ch;">Problema, solución, resultado.</h2>
       </div>
-      <a href="proyectos.html" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue-light);">Ver todos los proyectos &rarr;</a>
+      <a href="proyectos.html" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);">Ver todos los proyectos &rarr;</a>
     </div>
     <div class="grid-3" style="margin-top:36px;">
       <div class="card card--project">
-        <span class="tag" style="background:var(--bg-panel-3); color:var(--ink-soft); align-self:flex-start;">Hospitalidad — Punta Cana</span>
+        <span class="tag" style="background:var(--bg-alt); color:var(--ink-soft); align-self:flex-start;">Hospitalidad — Punta Cana</span>
         <div>
           <p class="block-label" style="color:var(--coral);">Problema</p>
           <p class="block-text">Cadena hotelera con ocupación fragmentada por propiedad, sin visibilidad consolidada.</p>
         </div>
         <div>
-          <p class="block-label" style="color:var(--blue-light);">Solución</p>
+          <p class="block-label" style="color:var(--blue);">Solución</p>
           <p class="block-text">Dashboard de BI unificado con predicción de demanda por temporada.</p>
         </div>
         <div>
-          <p class="block-label" style="color:var(--mint-light);">Resultado</p>
+          <p class="block-label" style="color:var(--mint);">Resultado</p>
           <p class="block-result">+12% precisión de forecast</p>
         </div>
       </div>
       <div class="card card--project">
-        <span class="tag" style="background:var(--bg-panel-3); color:var(--ink-soft); align-self:flex-start;">Retail — Santiago</span>
+        <span class="tag" style="background:var(--bg-alt); color:var(--ink-soft); align-self:flex-start;">Retail — Santiago</span>
         <div>
           <p class="block-label" style="color:var(--coral);">Problema</p>
           <p class="block-text">Cadena retail con inventario descoordinado entre tiendas.</p>
         </div>
         <div>
-          <p class="block-label" style="color:var(--blue-light);">Solución</p>
+          <p class="block-label" style="color:var(--blue);">Solución</p>
           <p class="block-text">Automatización ETL y modelo de reposición predictivo.</p>
         </div>
         <div>
-          <p class="block-label" style="color:var(--mint-light);">Resultado</p>
+          <p class="block-label" style="color:var(--mint);">Resultado</p>
           <p class="block-result">-18% en quiebres de stock (ahorro estimado RD$2.4M/año)</p>
         </div>
       </div>
       <div class="card card--project">
-        <span class="tag" style="background:var(--bg-panel-3); color:var(--ink-soft); align-self:flex-start;">Finanzas — Santo Domingo</span>
+        <span class="tag" style="background:var(--bg-alt); color:var(--ink-soft); align-self:flex-start;">Finanzas — Santo Domingo</span>
         <div>
           <p class="block-label" style="color:var(--coral);">Problema</p>
           <p class="block-text">Reportes de riesgo armados a mano, con datos de múltiples sistemas.</p>
         </div>
         <div>
-          <p class="block-label" style="color:var(--blue-light);">Solución</p>
+          <p class="block-label" style="color:var(--blue);">Solución</p>
           <p class="block-text">Pipeline de datos automatizado y tablero ejecutivo de riesgo.</p>
         </div>
         <div>
-          <p class="block-label" style="color:var(--mint-light);">Resultado</p>
+          <p class="block-label" style="color:var(--mint);">Resultado</p>
           <p class="block-result">De días a horas</p>
         </div>
       </div>
@@ -240,23 +226,23 @@
         <p class="eyebrow">Insights</p>
         <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:22ch;">Notas sobre datos, IA, BI y automatización.</h2>
       </div>
-      <a href="insights.html" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue-light);">Ver todos los insights &rarr;</a>
+      <a href="insights.html" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);">Ver todos los insights &rarr;</a>
     </div>
     <div class="grid-3" style="margin-top:40px;">
       <a href="insights.html" class="insight-card">
-        <span class="tag" style="background:rgba(34,179,155,0.16); color:#5FE0C6; align-self:flex-start;">IA</span>
+        <span class="tag" style="background:rgba(23,131,111,0.10); color:var(--mint); align-self:flex-start;">IA</span>
         <h4>Cómo elegir el primer caso de uso de IA generativa para tu empresa</h4>
         <p>Una guía práctica para no empezar por el proyecto equivocado.</p>
         <span class="read-more">Leer más &rarr;</span>
       </a>
       <a href="insights.html" class="insight-card">
-        <span class="tag" style="background:rgba(46,103,216,0.16); color:#6FA0FF; align-self:flex-start;">BI</span>
+        <span class="tag" style="background:rgba(31,93,147,0.10); color:var(--blue); align-self:flex-start;">BI</span>
         <h4>Dashboards que nadie mira: 5 errores comunes de gobierno de datos</h4>
         <p>Por qué la mayoría de los tableros ejecutivos terminan abandonados.</p>
         <span class="read-more">Leer más &rarr;</span>
       </a>
       <a href="insights.html" class="insight-card">
-        <span class="tag" style="background:rgba(34,179,155,0.16); color:#5FE0C6; align-self:flex-start;">Automatización</span>
+        <span class="tag" style="background:rgba(23,131,111,0.10); color:var(--mint); align-self:flex-start;">Automatización</span>
         <h4>RPA vs. automatización inteligente: cuándo usar cada una</h4>
         <p>No todo proceso manual necesita el mismo tipo de solución.</p>
         <span class="read-more">Leer más &rarr;</span>
@@ -265,8 +251,8 @@
   </div>
 </section>
 
-<section class="section section--panel section--divider-top" style="text-align:center;">
-  <div class="container" style="display:flex; flex-direction:column; align-items:center; gap:18px;">
+<section class="cta-band section">
+  <div class="container">
     <p class="eyebrow">Siguiente paso</p>
     <h2 style="font-size:28px; font-weight:700; max-width:24ch;">¿Listos para ver qué dicen sus datos?</h2>
     <a href="contacto.html" class="btn btn-primary">Solicitar diagnóstico</a>
@@ -275,12 +261,16 @@
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <p>&copy; 2026 TRINALYZE SRL — Con sede en Santo Domingo, República Dominicana.</p>
-    <svg width="18" height="18" viewBox="0 0 100 100" aria-hidden="true">
-      <polygon points="50,10 26,54 74,54" fill="#F4F1E9"></polygon>
-      <polygon points="26,54 50,54 38,80" fill="#2E67D8"></polygon>
-      <polygon points="50,54 74,54 62,80" fill="#22B39B"></polygon>
-    </svg>
+    <p>&copy; 2026 TRINALYZE SRL — Santo Domingo, República Dominicana.</p>
+    <div class="footer-links">
+      <a href="#">Aviso Legal</a>
+      <a href="#">Política de Privacidad</a>
+    </div>
+    <div class="footer-social">
+      <a href="#" aria-label="Facebook"><svg width="26" height="26" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13.5" fill="none" stroke="currentColor" stroke-width="1.3"></circle><text x="15" y="19.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="currentColor">f</text></svg></a>
+      <a href="#" aria-label="X"><svg width="26" height="26" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13.5" fill="none" stroke="currentColor" stroke-width="1.3"></circle><text x="15" y="19.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="currentColor">x</text></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg width="26" height="26" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13.5" fill="none" stroke="currentColor" stroke-width="1.3"></circle><text x="15" y="19" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="currentColor">in</text></svg></a>
+    </div>
   </div>
 </footer>
 
