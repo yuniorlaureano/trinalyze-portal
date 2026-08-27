@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: trinalyze-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: trinalyze
+      POSTGRES_USER: trinalyze
+      POSTGRES_PASSWORD: trinalyze_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - trinalyze_pgdata:/var/lib/postgresql/data
+
+volumes:
+  trinalyze_pgdata:

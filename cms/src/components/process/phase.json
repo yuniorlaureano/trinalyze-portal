@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_process_phases",
+  "info": {
+    "displayName": "Phase",
+    "icon": "flag",
+    "description": "One phase of the 5-phase TRINALYZE methodology"
+  },
+  "options": {},
+  "attributes": {
+    "numeral": {
+      "type": "string",
+      "required": true,
+      "description": "e.g. I, II, III, IV, V"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "question": {
+      "type": "string",
+      "required": true
+    },
+    "detail": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

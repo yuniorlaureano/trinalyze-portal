@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "services",
+  "info": {
+    "singularName": "service",
+    "pluralName": "services",
+    "displayName": "Service",
+    "description": "One of the three service pillars TRINALYZE offers"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "pillar": {
+      "type": "enumeration",
+      "enum": ["Data & Analytics", "Technology", "AI & Automation"],
+      "required": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "highlights": {
+      "type": "json",
+      "description": "List of short bullet points shown on the service detail page"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

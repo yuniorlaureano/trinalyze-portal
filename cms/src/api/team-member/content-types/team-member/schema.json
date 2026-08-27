@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "team_members",
+  "info": {
+    "singularName": "team-member",
+    "pluralName": "team-members",
+    "displayName": "Team Member",
+    "description": "CEO or director shown on the Equipo page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "direction": {
+      "type": "string",
+      "required": true,
+      "description": "e.g. Direccion de Tecnologia y Arquitectura Digital"
+    },
+    "roleSummary": {
+      "type": "string",
+      "description": "Short one-line description, e.g. Plataformas y ciberseguridad"
+    },
+    "initials": {
+      "type": "string",
+      "maxLength": 4
+    },
+    "bio": {
+      "type": "text"
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project",
+    "description": "Case study in problem / solution / result format"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "sector": {
+      "type": "enumeration",
+      "enum": ["Hospitalidad", "PYMEs", "Retail", "Finanzas", "Educacion"],
+      "required": true
+    },
+    "city": {
+      "type": "string"
+    },
+    "problem": {
+      "type": "text",
+      "required": true
+    },
+    "solution": {
+      "type": "text",
+      "required": true
+    },
+    "result": {
+      "type": "string",
+      "required": true
+    },
+    "isIllustrative": {
+      "type": "boolean",
+      "default": true,
+      "description": "True for placeholder/example case studies not tied to a real client"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
