@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getProcessPage, getSectors } from '../lib/strapi';
+
+const [process, sectors] = await Promise.all([getProcessPage(), getSectors()]);
+
+const PHASE_COLOR = ['var(--ink-faint)', 'var(--ink-faint)', 'var(--blue)', 'var(--blue)', 'var(--mint)'];
+---
+
+<Layout title="Soluciones" active="soluciones">
+  <section class="page-header">
+    <div class="container">
+      <p class="eyebrow">Soluciones · Nuestro proceso</p>
+      <h1>{process?.heading ?? 'Un ciclo metodológico de cinco fases, retroalimentado.'}</h1>
+      {process?.intro && <p class="dek">{process.intro}</p>}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="process-row" style="margin-top:0;">
+        {(process?.phases ?? []).map((phase, i) => (
+          <div
+            class="process-step"
+            style={i === (process?.phases.length ?? 0) - 1 ? 'border-right:none; margin-right:0;' : ''}
+          >
+            <div class="step-label">
+              <svg width="12" height="12" viewBox="0 0 100 100" aria-hidden="true">
+                <polygon
+                  points="50,10 10,85 90,85"
+                  fill="none"
+                  stroke={PHASE_COLOR[i] ?? 'var(--ink-faint)'}
+                  stroke-width="10"></polygon>
+              </svg>
+              <span>FASE {phase.numeral}</span>
+            </div>
+            <h4>{phase.title}</h4>
+            <p class="question">{phase.question}</p>
+            <p class="detail">{phase.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sectors-band">
+    <div class="container">
+      <p class="eyebrow">Sectores</p>
+      <h2>Trabajamos donde los datos mueven la operación.</h2>
+      <div class="chip-row">
+        {sectors.map((sector) => <span class="chip">{sector.name}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band section">
+    <div class="container">
+      <p class="eyebrow">Vea el proceso aplicado</p>
+      <h2 style="font-size:26px; font-weight:700; max-width:26ch;">
+        Así se vio en proyectos reales de nuestros clientes.
+      </h2>
+      <a href="/proyectos" class="btn btn-ghost">Ver proyectos &rarr;</a>
+    </div>
+  </section>
+</Layout>

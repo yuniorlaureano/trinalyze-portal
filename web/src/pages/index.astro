@@ -1,17 +1,290 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import { getAboutPage, getServices, getProjects, getSectors, getPosts } from '../lib/strapi';
 
+const [about, services, projects, sectors, posts] = await Promise.all([
+  getAboutPage(),
+  getServices(),
+  getProjects(),
+  getSectors(),
+  getPosts(),
+]);
+
+const PILLAR_ICON: Record<string, { color: string; path: string }> = {
+  'Data & Analytics': {
+    color: 'var(--blue)',
+    path: '<line x1="4" y1="20" x2="4" y2="11"></line><line x1="12" y1="20" x2="12" y2="5"></line><line x1="20" y1="20" x2="20" y2="14"></line>',
+  },
+  Technology: {
+    color: 'var(--ink-soft)',
+    path: '<rect x="7" y="7" width="10" height="10" rx="1.5"></rect><line x1="10" y1="2" x2="10" y2="7"></line><line x1="14" y1="2" x2="14" y2="7"></line><line x1="10" y1="17" x2="10" y2="22"></line><line x1="14" y1="17" x2="14" y2="22"></line><line x1="2" y1="10" x2="7" y2="10"></line><line x1="2" y1="14" x2="7" y2="14"></line><line x1="17" y1="10" x2="22" y2="10"></line><line x1="17" y1="14" x2="22" y2="14"></line>',
+  },
+  'AI & Automation': {
+    color: 'var(--mint)',
+    path: '<circle cx="6" cy="6" r="2.2"></circle><circle cx="18" cy="6" r="2.2"></circle><circle cx="12" cy="18" r="2.2"></circle><line x1="7.6" y1="7.4" x2="10.6" y2="16"></line><line x1="16.4" y1="7.4" x2="13.4" y2="16"></line><line x1="8.2" y1="6" x2="15.8" y2="6"></line>',
+  },
+};
+
+const CATEGORY_COLOR: Record<string, string> = {
+  IA: 'var(--mint)',
+  BI: 'var(--blue)',
+  Automatizacion: 'var(--mint)',
+  Data: 'var(--blue)',
+};
+
+const featuredServices = services.slice(0, 3);
+const featuredProjects = projects.slice(0, 3);
+const featuredPosts = posts.slice(0, 3);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Datos, Tecnología, Estrategia" active="inicio">
+  <section class="hero">
+    <svg class="hero-bg" width="900" height="760" viewBox="0 0 900 760" aria-hidden="true">
+      <polygon points="620,40 900,560 340,560" fill="#FFFFFF" opacity="0.05"></polygon>
+      <polygon points="780,260 900,700 560,700" fill="#FFFFFF" opacity="0.05"></polygon>
+      <polygon
+        points="420,320 620,680 220,680"
+        fill="none"
+        stroke="#FFFFFF"
+        stroke-opacity="0.14"
+        stroke-width="1.5"></polygon>
+      <polygon
+        points="720,120 860,380 580,380"
+        fill="none"
+        stroke="#FFFFFF"
+        stroke-opacity="0.16"
+        stroke-width="1.5"></polygon>
+    </svg>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Datos · Tecnología · Estrategia</p>
+        <h1>Transformamos datos en decisiones.<br />Transformamos decisiones en resultados.</h1>
+        <p class="lede">
+          Consultoría tecnológica, inteligencia artificial, automatización y business intelligence
+          para organizaciones dominicanas y de la región que quieren competir con evidencia — no
+          con intuición.
+        </p>
+        <div class="hero-actions">
+          <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
+          <a href="/soluciones" class="btn btn-ghost--onhero">Ver nuestro proceso</a>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-bar">
+          <span class="dash-dot" style="background:#E2897A;"></span>
+          <span class="dash-dot" style="background:#E0C56F;"></span>
+          <span class="dash-dot" style="background:#22B39B;"></span>
+          <span class="dash-url">panel-analitica.trinalyze</span>
+        </div>
+        <div class="dash-kpis">
+          <div class="dash-kpi">
+            <p class="num">78%</p>
+            <p class="lbl">Ocupación hotelera</p>
+            <p class="delta" style="color:#5FE0C6;">↑ 12%</p>
+          </div>
+          <div class="dash-kpi">
+            <p class="num">1,204</p>
+            <p class="lbl">Tickets automatizados</p>
+            <p class="delta" style="color:#5FE0C6;">↑ 34%</p>
+          </div>
+          <div class="dash-kpi">
+            <p class="num">6.2h</p>
+            <p class="lbl">Tiempo de respuesta</p>
+            <p class="delta" style="color:#6FA0FF;">↓ 63%</p>
+          </div>
+        </div>
+        <div class="dash-chart-wrap">
+          <p class="chart-lbl">Ingresos proyectados (RD$MM)</p>
+          <svg width="100%" height="130" viewBox="0 0 300 140" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#22B39B" stop-opacity="0.35"></stop>
+                <stop offset="1" stop-color="#22B39B" stop-opacity="0"></stop>
+              </linearGradient>
+            </defs>
+            <line x1="10" y1="40" x2="290" y2="40" stroke="rgba(255,255,255,0.12)" stroke-width="1"></line>
+            <line x1="10" y1="75" x2="290" y2="75" stroke="rgba(255,255,255,0.12)" stroke-width="1"></line>
+            <line x1="10" y1="110" x2="290" y2="110" stroke="rgba(255,255,255,0.12)" stroke-width="1"></line>
+            <polygon
+              points="10,110 66,88.4 122,95.6 178,65 234,48.8 290,20 290,130 10,130"
+              fill="url(#chartFill)"></polygon>
+            <polyline
+              points="10,110 66,88.4 122,95.6 178,65 234,48.8 290,20"
+              fill="none"
+              stroke="#22B39B"
+              stroke-width="2.5"
+              stroke-linejoin="round"
+              stroke-linecap="round"></polyline>
+            <circle cx="290" cy="20" r="3.5" fill="#22B39B"></circle>
+          </svg>
+          <div class="chart-months">
+            <span>ENE</span><span>FEB</span><span>MAR</span><span>ABR</span><span>MAY</span><span>JUN</span>
+          </div>
+          <p class="chart-note">Vista ilustrativa · datos de ejemplo</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <div>
+        <p class="eyebrow">Qué hacemos</p>
+        <h2 style="font-size:29px; font-weight:700; margin-top:10px;">
+          {about?.queHacemosHeading ?? 'Consultoría tecnológica con base en datos, no en suposiciones.'}
+        </h2>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        {(about?.queHacemosBody ?? '').split('\n\n').map((paragraph) => (
+          <p style="font-size:16.5px; color:var(--ink-soft); max-width:60ch; white-space:pre-line;">{paragraph}</p>
+        ))}
+        <div style="display:flex; gap:28px; margin-top:8px; flex-wrap:wrap;">
+          <div>
+            <p style="font-family:var(--font-mono); font-size:20px; font-weight:500;">
+              {about?.hqCity ?? 'Santo Domingo, RD'}
+            </p>
+            <p style="font-size:13px; color:var(--ink-faint);">Sede central</p>
+          </div>
+          <div>
+            <p style="font-family:var(--font-mono); font-size:20px; font-weight:500;">
+              {about?.activeBusinessLines ?? 7}
+            </p>
+            <p style="font-size:13px; color:var(--ink-faint);">Líneas de negocio activas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt section--divider-top section--divider-bottom">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
+        <div>
+          <p class="eyebrow">Servicios</p>
+          <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:22ch;">
+            Tres pilares, un mismo objetivo.
+          </h2>
+        </div>
+        <a href="/servicios" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);"
+          >Ver todos los servicios &rarr;</a
+        >
+      </div>
+      <div class="grid-3" style="margin-top:40px;">
+        {featuredServices.map((service) => {
+          const icon = PILLAR_ICON[service.pillar] ?? PILLAR_ICON['Technology'];
+          return (
+            <div class="card card--service" style={`border-top-color:${icon.color};`}>
+              <svg
+                width="26"
+                height="26"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={icon.color}
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                set:html={icon.path}
+              />
+              <span class="tag" style={`background:color-mix(in srgb, ${icon.color} 14%, white); color:${icon.color};`}>
+                {service.pillar}
+              </span>
+              <h3>{service.title}</h3>
+              <p>{service.summary}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
+        <div>
+          <p class="eyebrow">Proyectos</p>
+          <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:20ch;">
+            Problema, solución, resultado.
+          </h2>
+        </div>
+        <a href="/proyectos" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);"
+          >Ver todos los proyectos &rarr;</a
+        >
+      </div>
+      <div class="grid-3" style="margin-top:36px;">
+        {featuredProjects.map((project) => (
+          <div class="card card--project">
+            <span class="tag" style="background:var(--bg-alt); color:var(--ink-soft); align-self:flex-start;">
+              {project.sector}{project.city ? ` — ${project.city}` : ''}
+            </span>
+            <div>
+              <p class="block-label" style="color:var(--coral);">Problema</p>
+              <p class="block-text">{project.problem}</p>
+            </div>
+            <div>
+              <p class="block-label" style="color:var(--blue);">Solución</p>
+              <p class="block-text">{project.solution}</p>
+            </div>
+            <div>
+              <p class="block-label" style="color:var(--mint);">Resultado</p>
+              <p class="block-result">{project.result}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p style="font-family:var(--font-mono); font-size:11.5px; color:var(--ink-faint); margin-top:20px;">
+        Casos ilustrativos — formato de referencia.
+      </p>
+    </div>
+  </section>
+
+  <section class="sectors-band">
+    <div class="container">
+      <p class="eyebrow">Sectores</p>
+      <h2>Trabajamos donde los datos mueven la operación.</h2>
+      <div class="chip-row">
+        {sectors.map((sector) => <span class="chip">{sector.name}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
+        <div>
+          <p class="eyebrow">Insights</p>
+          <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:22ch;">
+            Notas sobre datos, IA, BI y automatización.
+          </h2>
+        </div>
+        <a href="/insights" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);"
+          >Ver todos los insights &rarr;</a
+        >
+      </div>
+      <div class="grid-3" style="margin-top:40px;">
+        {featuredPosts.map((post) => (
+          <a href="/insights" class="insight-card">
+            <span
+              class="tag"
+              style={`background:color-mix(in srgb, ${CATEGORY_COLOR[post.category] ?? 'var(--blue)'} 14%, white); color:${CATEGORY_COLOR[post.category] ?? 'var(--blue)'}; align-self:flex-start;`}
+            >
+              {post.category}
+            </span>
+            <h4>{post.title}</h4>
+            <p>{post.excerpt}</p>
+            <span class="read-more">Leer más &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band section">
+    <div class="container">
+      <p class="eyebrow">Siguiente paso</p>
+      <h2 style="font-size:28px; font-weight:700; max-width:24ch;">¿Listos para ver qué dicen sus datos?</h2>
+      <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
+    </div>
+  </section>
+</Layout>

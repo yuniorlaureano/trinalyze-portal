@@ -1,0 +1,29 @@
+---
+interface Props {
+  active: 'inicio' | 'servicios' | 'soluciones' | 'proyectos' | 'equipo' | 'insights' | 'contacto';
+}
+
+const { active } = Astro.props;
+
+const links = [
+  { id: 'inicio', href: '/', label: 'Inicio' },
+  { id: 'servicios', href: '/servicios', label: 'Servicios' },
+  { id: 'soluciones', href: '/soluciones', label: 'Soluciones' },
+  { id: 'proyectos', href: '/proyectos', label: 'Proyectos' },
+  { id: 'equipo', href: '/equipo', label: 'Equipo' },
+  { id: 'insights', href: '/insights', label: 'Insights' },
+  { id: 'contacto', href: '/contacto', label: 'Contacto' },
+] as const;
+---
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="logo"><img src="/assets/logo-official.jpg" alt="TRIN∆LYZE" /></a>
+    <nav class="nav-links">
+      {links.map((link) => (
+        <a href={link.href} class={link.id === active ? 'active' : ''}>{link.label}</a>
+      ))}
+    </nav>
+    <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
+  </div>
+</header>

@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getProjects } from '../lib/strapi';
+
+const projects = await getProjects();
+---
+
+<Layout title="Proyectos" active="proyectos">
+  <section class="page-header">
+    <div class="container">
+      <p class="eyebrow">Proyectos</p>
+      <h1>Problema, solución, resultado.</h1>
+      <p class="dek">
+        Así documentamos cada proyecto — sin adornos, con el resultado medible al final. Los casos
+        abajo son ilustrativos, pensados para mostrar el formato en el que reportamos resultados
+        reales.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-3">
+        {projects.map((project) => (
+          <div class="card card--project">
+            <span class="tag" style="background:var(--bg-alt); color:var(--ink-soft); align-self:flex-start;">
+              {project.sector}{project.city ? ` — ${project.city}` : ''}
+            </span>
+            <div>
+              <p class="block-label" style="color:var(--coral);">Problema</p>
+              <p class="block-text">{project.problem}</p>
+            </div>
+            <div>
+              <p class="block-label" style="color:var(--blue);">Solución</p>
+              <p class="block-text">{project.solution}</p>
+            </div>
+            <div>
+              <p class="block-label" style="color:var(--mint);">Resultado</p>
+              <p class="block-result">{project.result}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      {projects.some((p) => p.isIllustrative) && (
+        <p style="font-family:var(--font-mono); font-size:11.5px; color:var(--ink-faint); margin-top:24px;">
+          Casos ilustrativos — formato de referencia. Se reemplazan por proyectos reales antes de publicar.
+        </p>
+      )}
+    </div>
+  </section>
+
+  <section class="cta-band section">
+    <div class="container">
+      <p class="eyebrow">¿Su empresa tiene un caso parecido?</p>
+      <h2 style="font-size:26px; font-weight:700; max-width:26ch;">Cuéntenos qué proceso quiere mejorar.</h2>
+      <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
+    </div>
+  </section>
+</Layout>

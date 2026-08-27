@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getPosts } from '../lib/strapi';
+
+const posts = await getPosts();
+
+const CATEGORY_COLOR: Record<string, string> = {
+  IA: 'var(--mint)',
+  BI: 'var(--blue)',
+  Automatizacion: 'var(--mint)',
+  Data: 'var(--blue)',
+};
+---
+
+<Layout title="Insights" active="insights">
+  <section class="page-header">
+    <div class="container">
+      <p class="eyebrow">Insights</p>
+      <h1>Notas sobre datos, IA, BI y automatización.</h1>
+      <p class="dek">Lo que aprendemos aplicando esto en clientes reales, en formato corto y sin relleno.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-3">
+        {posts.map((post) => {
+          const color = CATEGORY_COLOR[post.category] ?? 'var(--blue)';
+          return (
+            <a href="/insights" class="insight-card">
+              <span
+                class="tag"
+                style={`background:color-mix(in srgb, ${color} 14%, white); color:${color}; align-self:flex-start;`}
+              >
+                {post.category}
+              </span>
+              <h4>{post.title}</h4>
+              <p>{post.excerpt}</p>
+              <span class="read-more">Leer más &rarr;</span>
+            </a>
+          );
+        })}
+      </div>
+      <p style="font-family:var(--font-mono); font-size:11.5px; color:var(--ink-faint); margin-top:24px;">
+        Titulares ilustrativos — se conectan a artículos reales del blog una vez publicado.
+      </p>
+    </div>
+  </section>
+</Layout>

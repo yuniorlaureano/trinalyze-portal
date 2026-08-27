@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getServices } from '../lib/strapi';
+
+const services = await getServices();
+
+const PILLAR_ICON: Record<string, { color: string; path: string }> = {
+  'Data & Analytics': {
+    color: 'var(--blue)',
+    path: '<line x1="4" y1="20" x2="4" y2="11"></line><line x1="12" y1="20" x2="12" y2="5"></line><line x1="20" y1="20" x2="20" y2="14"></line>',
+  },
+  Technology: {
+    color: 'var(--ink-soft)',
+    path: '<rect x="7" y="7" width="10" height="10" rx="1.5"></rect><line x1="10" y1="2" x2="10" y2="7"></line><line x1="14" y1="2" x2="14" y2="7"></line><line x1="10" y1="17" x2="10" y2="22"></line><line x1="14" y1="17" x2="14" y2="22"></line><line x1="2" y1="10" x2="7" y2="10"></line><line x1="2" y1="14" x2="7" y2="14"></line><line x1="17" y1="10" x2="22" y2="10"></line><line x1="17" y1="14" x2="22" y2="14"></line>',
+  },
+  'AI & Automation': {
+    color: 'var(--mint)',
+    path: '<circle cx="6" cy="6" r="2.2"></circle><circle cx="18" cy="6" r="2.2"></circle><circle cx="12" cy="18" r="2.2"></circle><line x1="7.6" y1="7.4" x2="10.6" y2="16"></line><line x1="16.4" y1="7.4" x2="13.4" y2="16"></line><line x1="8.2" y1="6" x2="15.8" y2="6"></line>',
+  },
+};
+---
+
+<Layout title="Servicios" active="servicios">
+  <section class="page-header">
+    <div class="container">
+      <p class="eyebrow">Servicios</p>
+      <h1>Tres pilares, un mismo objetivo: decisiones mejores y más rápidas.</h1>
+      <p class="dek">
+        Cada línea de negocio se apoya en las otras dos — los datos alimentan la IA, la tecnología
+        sostiene ambas. Así trabajamos cada proyecto, sin importar por cuál pilar entre el cliente.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="display:flex; flex-direction:column; gap:64px;">
+      {services.map((service, i) => {
+        const icon = PILLAR_ICON[service.pillar] ?? PILLAR_ICON['Technology'];
+        return (
+          <div class="grid-2" style="grid-template-columns: 0.55fr 1fr;">
+            <div>
+              <svg
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={icon.color}
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                set:html={icon.path}
+              />
+              <h2 style="font-size:26px; font-weight:700; margin-top:14px;">{service.title}</h2>
+              <p style="font-size:15px; color:var(--ink-soft); margin-top:12px; max-width:38ch;">
+                {service.description}
+              </p>
+            </div>
+            <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:14px;">
+              {(service.highlights ?? []).map((item) => (
+                <li style="border-top:1px solid var(--line); padding-top:14px; font-size:15px; color:var(--ink);">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="cta-band section">
+    <div class="container">
+      <p class="eyebrow">¿No sabes por dónde empezar?</p>
+      <h2 style="font-size:26px; font-weight:700; max-width:26ch;">
+        Un diagnóstico gratuito te dice cuál pilar resolver primero.
+      </h2>
+      <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
+    </div>
+  </section>
+</Layout>
