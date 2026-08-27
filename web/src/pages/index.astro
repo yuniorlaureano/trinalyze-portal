@@ -1,14 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getAboutPage, getServices, getProjects, getSectors, getPosts } from '../lib/strapi';
+import CtaBand from '../components/CtaBand.astro';
+import { getHomePage, getServices, getProjects, getSectors, getPosts } from '../lib/strapi';
 
-const [about, services, projects, sectors, posts] = await Promise.all([
-  getAboutPage(),
+const [home, services, projects, sectors, posts] = await Promise.all([
+  getHomePage(),
   getServices(),
   getProjects(),
   getSectors(),
   getPosts(),
 ]);
+
+if (!home) {
+  throw new Error('Home Page content is missing in Strapi — create it at /admin/content-manager/single-types/api::home-page.home-page');
+}
 
 const PILLAR_ICON: Record<string, { color: string; path: string }> = {
   'Data & Analytics': {
@@ -35,6 +40,7 @@ const CATEGORY_COLOR: Record<string, string> = {
 const featuredServices = services.slice(0, 3);
 const featuredProjects = projects.slice(0, 3);
 const featuredPosts = posts.slice(0, 3);
+const heroLines = home.hero.heading.split('\n');
 ---
 
 <Layout title="Datos, Tecnología, Estrategia" active="inicio">
@@ -57,16 +63,23 @@ const featuredPosts = posts.slice(0, 3);
     </svg>
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Datos · Tecnología · Estrategia</p>
-        <h1>Transformamos datos en decisiones.<br />Transformamos decisiones en resultados.</h1>
-        <p class="lede">
-          Consultoría tecnológica, inteligencia artificial, automatización y business intelligence
-          para organizaciones dominicanas y de la región que quieren competir con evidencia — no
-          con intuición.
-        </p>
+        <p class="eyebrow">{home.hero.eyebrow}</p>
+        <h1>
+          {heroLines.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))}
+        </h1>
+        <p class="lede">{home.hero.lede}</p>
         <div class="hero-actions">
-          <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
-          <a href="/soluciones" class="btn btn-ghost--onhero">Ver nuestro proceso</a>
+          <a href={home.hero.primaryCtaHref} class="btn btn-primary">{home.hero.primaryCtaLabel}</a>
+          {home.hero.secondaryCtaLabel && (
+            <a href={home.hero.secondaryCtaHref ?? '#'} class="btn btn-ghost--onhero">
+              {home.hero.secondaryCtaLabel}
+            </a>
+          )}
         </div>
       </div>
 
@@ -131,27 +144,19 @@ const featuredPosts = posts.slice(0, 3);
     <div class="container grid-2">
       <div>
         <p class="eyebrow">Qué hacemos</p>
-        <h2 style="font-size:29px; font-weight:700; margin-top:10px;">
-          {about?.queHacemosHeading ?? 'Consultoría tecnológica con base en datos, no en suposiciones.'}
-        </h2>
+        <h2 style="font-size:29px; font-weight:700; margin-top:10px;">{home.queHacemos.heading}</h2>
       </div>
       <div style="display:flex; flex-direction:column; gap:18px;">
-        {(about?.queHacemosBody ?? '').split('\n\n').map((paragraph) => (
-          <p style="font-size:16.5px; color:var(--ink-soft); max-width:60ch; white-space:pre-line;">{paragraph}</p>
+        {home.queHacemos.body.split('\n\n').map((paragraph) => (
+          <p style="font-size:16.5px; color:var(--ink-soft); max-width:60ch;">{paragraph}</p>
         ))}
         <div style="display:flex; gap:28px; margin-top:8px; flex-wrap:wrap;">
-          <div>
-            <p style="font-family:var(--font-mono); font-size:20px; font-weight:500;">
-              {about?.hqCity ?? 'Santo Domingo, RD'}
-            </p>
-            <p style="font-size:13px; color:var(--ink-faint);">Sede central</p>
-          </div>
-          <div>
-            <p style="font-family:var(--font-mono); font-size:20px; font-weight:500;">
-              {about?.activeBusinessLines ?? 7}
-            </p>
-            <p style="font-size:13px; color:var(--ink-faint);">Líneas de negocio activas</p>
-          </div>
+          {home.queHacemos.stats.map((stat) => (
+            <div>
+              <p style="font-family:var(--font-mono); font-size:20px; font-weight:500;">{stat.value}</p>
+              <p style="font-size:13px; color:var(--ink-faint);">{stat.label}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -161,9 +166,9 @@ const featuredPosts = posts.slice(0, 3);
     <div class="container">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
         <div>
-          <p class="eyebrow">Servicios</p>
+          <p class="eyebrow">{home.serviciosHeader.eyebrow}</p>
           <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:22ch;">
-            Tres pilares, un mismo objetivo.
+            {home.serviciosHeader.heading}
           </h2>
         </div>
         <a href="/servicios" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);"
@@ -203,9 +208,9 @@ const featuredPosts = posts.slice(0, 3);
     <div class="container">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
         <div>
-          <p class="eyebrow">Proyectos</p>
+          <p class="eyebrow">{home.proyectosHeader.eyebrow}</p>
           <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:20ch;">
-            Problema, solución, resultado.
+            {home.proyectosHeader.heading}
           </h2>
         </div>
         <a href="/proyectos" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);"
@@ -241,8 +246,8 @@ const featuredPosts = posts.slice(0, 3);
 
   <section class="sectors-band">
     <div class="container">
-      <p class="eyebrow">Sectores</p>
-      <h2>Trabajamos donde los datos mueven la operación.</h2>
+      <p class="eyebrow">{home.sectoresHeader.eyebrow}</p>
+      <h2>{home.sectoresHeader.heading}</h2>
       <div class="chip-row">
         {sectors.map((sector) => <span class="chip">{sector.name}</span>)}
       </div>
@@ -253,9 +258,9 @@ const featuredPosts = posts.slice(0, 3);
     <div class="container">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
         <div>
-          <p class="eyebrow">Insights</p>
+          <p class="eyebrow">{home.insightsHeader.eyebrow}</p>
           <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:22ch;">
-            Notas sobre datos, IA, BI y automatización.
+            {home.insightsHeader.heading}
           </h2>
         </div>
         <a href="/insights" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);"
@@ -280,11 +285,5 @@ const featuredPosts = posts.slice(0, 3);
     </div>
   </section>
 
-  <section class="cta-band section">
-    <div class="container">
-      <p class="eyebrow">Siguiente paso</p>
-      <h2 style="font-size:28px; font-weight:700; max-width:24ch;">¿Listos para ver qué dicen sus datos?</h2>
-      <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
-    </div>
-  </section>
+  <CtaBand cta={home.ctaFinal} />
 </Layout>

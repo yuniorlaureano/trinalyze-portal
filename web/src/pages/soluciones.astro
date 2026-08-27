@@ -1,8 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getProcessPage, getSectors } from '../lib/strapi';
+import CtaBand from '../components/CtaBand.astro';
+import { getSolucionesPage, getSectors } from '../lib/strapi';
 
-const [process, sectors] = await Promise.all([getProcessPage(), getSectors()]);
+const [page, sectors] = await Promise.all([getSolucionesPage(), getSectors()]);
+
+if (!page) {
+  throw new Error('Soluciones Page content is missing in Strapi.');
+}
 
 const PHASE_COLOR = ['var(--ink-faint)', 'var(--ink-faint)', 'var(--blue)', 'var(--blue)', 'var(--mint)'];
 ---
@@ -10,20 +15,17 @@ const PHASE_COLOR = ['var(--ink-faint)', 'var(--ink-faint)', 'var(--blue)', 'var
 <Layout title="Soluciones" active="soluciones">
   <section class="page-header">
     <div class="container">
-      <p class="eyebrow">Soluciones · Nuestro proceso</p>
-      <h1>{process?.heading ?? 'Un ciclo metodológico de cinco fases, retroalimentado.'}</h1>
-      {process?.intro && <p class="dek">{process.intro}</p>}
+      <p class="eyebrow">{page.header.eyebrow}</p>
+      <h1>{page.header.heading}</h1>
+      {page.header.dek && <p class="dek">{page.header.dek}</p>}
     </div>
   </section>
 
   <section class="section">
     <div class="container">
       <div class="process-row" style="margin-top:0;">
-        {(process?.phases ?? []).map((phase, i) => (
-          <div
-            class="process-step"
-            style={i === (process?.phases.length ?? 0) - 1 ? 'border-right:none; margin-right:0;' : ''}
-          >
+        {page.phases.map((phase, i) => (
+          <div class="process-step" style={i === page.phases.length - 1 ? 'border-right:none; margin-right:0;' : ''}>
             <div class="step-label">
               <svg width="12" height="12" viewBox="0 0 100 100" aria-hidden="true">
                 <polygon
@@ -53,13 +55,5 @@ const PHASE_COLOR = ['var(--ink-faint)', 'var(--ink-faint)', 'var(--blue)', 'var
     </div>
   </section>
 
-  <section class="cta-band section">
-    <div class="container">
-      <p class="eyebrow">Vea el proceso aplicado</p>
-      <h2 style="font-size:26px; font-weight:700; max-width:26ch;">
-        Así se vio en proyectos reales de nuestros clientes.
-      </h2>
-      <a href="/proyectos" class="btn btn-ghost">Ver proyectos &rarr;</a>
-    </div>
-  </section>
+  <CtaBand cta={page.ctaFinal} variant="ghost" />
 </Layout>

@@ -12,8 +12,13 @@ const PUBLIC_READ_ACTIONS = [
   'api::sector.sector.findOne',
   'api::post.post.find',
   'api::post.post.findOne',
-  'api::about-page.about-page.find',
-  'api::process-page.process-page.find',
+  'api::home-page.home-page.find',
+  'api::servicios-page.servicios-page.find',
+  'api::soluciones-page.soluciones-page.find',
+  'api::proyectos-page.proyectos-page.find',
+  'api::equipo-page.equipo-page.find',
+  'api::insights-page.insights-page.find',
+  'api::contacto-page.contacto-page.find',
 ];
 
 // The only write the public role is allowed to do: submit the contact form.

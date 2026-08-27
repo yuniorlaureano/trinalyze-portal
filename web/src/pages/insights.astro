@@ -1,8 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getPosts } from '../lib/strapi';
+import { getInsightsPage, getPosts } from '../lib/strapi';
 
-const posts = await getPosts();
+const [page, posts] = await Promise.all([getInsightsPage(), getPosts()]);
+
+if (!page) {
+  throw new Error('Insights Page content is missing in Strapi.');
+}
 
 const CATEGORY_COLOR: Record<string, string> = {
   IA: 'var(--mint)',
@@ -15,9 +19,9 @@ const CATEGORY_COLOR: Record<string, string> = {
 <Layout title="Insights" active="insights">
   <section class="page-header">
     <div class="container">
-      <p class="eyebrow">Insights</p>
-      <h1>Notas sobre datos, IA, BI y automatización.</h1>
-      <p class="dek">Lo que aprendemos aplicando esto en clientes reales, en formato corto y sin relleno.</p>
+      <p class="eyebrow">{page.header.eyebrow}</p>
+      <h1>{page.header.heading}</h1>
+      {page.header.dek && <p class="dek">{page.header.dek}</p>}
     </div>
   </section>
 

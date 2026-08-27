@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "contacto_pages",
+  "info": {
+    "singularName": "contacto-page",
+    "pluralName": "contacto-pages",
+    "displayName": "Contacto Page",
+    "description": "Contacto — header + the small bits of copy around the form"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    },
+    "whatsappLabel": {
+      "type": "string",
+      "required": true
+    },
+    "footerNote": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

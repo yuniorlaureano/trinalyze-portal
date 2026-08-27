@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "equipo_pages",
+  "info": {
+    "singularName": "equipo-page",
+    "pluralName": "equipo-pages",
+    "displayName": "Equipo Page",
+    "description": "Equipo — header + Filosofía; the team roster lives in the Team Member collection"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    },
+    "filosofia": {
+      "type": "component",
+      "component": "sections.filosofia",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

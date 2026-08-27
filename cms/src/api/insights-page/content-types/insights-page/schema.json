@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "insights_pages",
+  "info": {
+    "singularName": "insights-page",
+    "pluralName": "insights-pages",
+    "displayName": "Insights Page",
+    "description": "Insights — page header; the articles themselves live in the Post collection"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

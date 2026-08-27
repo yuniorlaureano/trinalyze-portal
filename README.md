@@ -37,16 +37,40 @@ npm run dev
 
 ## Modelo de contenido (Strapi)
 
-| Content-Type | Tipo | Para qué |
-|---|---|---|
-| `Service` | Colección | Los 3 pilares (Data & Analytics, Technology, AI & Automation) |
-| `Project` | Colección | Casos de estudio, formato problema / solución / resultado |
-| `TeamMember` | Colección | CEO + 4 direcciones |
-| `Sector` | Colección | Hospitalidad, PYMEs, Retail, Finanzas, Educación |
-| `Post` | Colección | Artículos de Insights |
-| `ContactSubmission` | Colección | Envíos del formulario "Solicitar diagnóstico" |
-| `AboutPage` | Single Type | Qué Hacemos + Filosofía |
-| `ProcessPage` | Single Type | Las 5 fases del proceso metodológico |
+Cada página del sitio es un **Single Type propio**, compuesto por
+**Components** con nombre — uno por cada bloque visual de esa página. La
+idea: al abrir cualquier Single Type en Strapi, la estructura se entiende
+por los bloques (`hero`, `queHacemos`, `filosofia`, `ctaFinal`...) sin
+necesidad de leer el contenido. Donde una sección necesita una lista que
+crece con el tiempo (Proyectos, Insights), ese bloque no vive dentro de la
+página — se resuelve consultando la Collection correspondiente aparte.
+
+| Single Type (una página) | Bloques (Components) |
+|---|---|
+| `HomePage` | `hero`, `queHacemos` (+ `stats` anidado), `serviciosHeader`, `proyectosHeader`, `sectoresHeader`, `insightsHeader`, `ctaFinal` |
+| `ServiciosPage` | `header`, `ctaFinal` |
+| `SolucionesPage` | `header`, `phases` (las 5 fases), `ctaFinal` |
+| `ProyectosPage` | `header`, `ctaFinal` |
+| `EquipoPage` | `header`, `filosofia` |
+| `InsightsPage` | `header` |
+| `ContactoPage` | `header`, `whatsappLabel`, `footerNote` |
+
+Components reutilizados entre páginas: `shared.section-header` (eyebrow +
+heading + dek), `shared.cta-band`, `shared.stat`, `sections.hero`,
+`sections.about`, `sections.filosofia`, `process.phase`.
+
+| Collection Type | Para qué |
+|---|---|
+| `Service` | Los 3 pilares (Data & Analytics, Technology, AI & Automation) |
+| `Project` | Casos de estudio, formato problema / solución / resultado |
+| `TeamMember` | CEO + 4 direcciones |
+| `Sector` | Hospitalidad, PYMEs, Retail, Finanzas, Educación |
+| `Post` | Artículos de Insights |
+| `ContactSubmission` | Envíos del formulario "Solicitar diagnóstico" |
+
+Estas quedan como Collections (y no como Components dentro de una página)
+porque crecen con el tiempo, se publican de a una, y `Post.author` incluso
+referencia `TeamMember` — algo que un Component no puede hacer.
 
 El arranque de Strapi ([`cms/src/index.ts`](cms/src/index.ts)) otorga
 automáticamente permisos públicos de lectura sobre las colecciones y Single
@@ -58,8 +82,8 @@ API sin necesitar un token.
 [`cms/scripts/seed-illustrative.sh`](cms/scripts/seed-illustrative.sh) carga
 vía API el mismo contenido de ejemplo que ya vive en `/prototype` (3
 servicios, 3 proyectos ilustrativos, 5 direcciones, 5 sectores, 6 posts de
-Insights, y las dos páginas únicas). Requiere un token de API con acceso
-completo:
+Insights, y los 7 Single Types de página). Requiere un token de API con
+acceso completo:
 
 ```bash
 STRAPI_API_TOKEN=<token-full-access> ./cms/scripts/seed-illustrative.sh
@@ -69,13 +93,13 @@ STRAPI_API_TOKEN=<token-full-access> ./cms/scripts/seed-illustrative.sh
 
 | Página | Ruta | Contenido desde Strapi |
 |---|---|---|
-| Inicio | `/` | `AboutPage`, `Service`, `Project`, `Sector`, `Post` |
-| Servicios | `/servicios` | `Service` (con `highlights`) |
-| Soluciones | `/soluciones` | `ProcessPage` (5 fases) + `Sector` |
-| Proyectos | `/proyectos` | `Project` |
-| Equipo | `/equipo` | `TeamMember` + `AboutPage` (Filosofía) |
-| Insights | `/insights` | `Post` |
-| Contacto | `/contacto` | Formulario (isla de React) → `POST /api/contact-submissions` |
+| Inicio | `/` | `HomePage` + `Service`, `Project`, `Sector`, `Post` |
+| Servicios | `/servicios` | `ServiciosPage` + `Service` (con `highlights`) |
+| Soluciones | `/soluciones` | `SolucionesPage` (con `phases`) + `Sector` |
+| Proyectos | `/proyectos` | `ProyectosPage` + `Project` |
+| Equipo | `/equipo` | `EquipoPage` + `TeamMember` |
+| Insights | `/insights` | `InsightsPage` + `Post` |
+| Contacto | `/contacto` | `ContactoPage` + formulario (isla de React) → `POST /api/contact-submissions` |
 
 ## Estado actual
 

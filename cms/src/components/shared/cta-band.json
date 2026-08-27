@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_shared_cta_bands",
+  "info": {
+    "displayName": "CTA Band",
+    "icon": "cursor",
+    "description": "Closing call-to-action block shown at the bottom of a page"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "buttonLabel": {
+      "type": "string",
+      "required": true
+    },
+    "buttonHref": {
+      "type": "string",
+      "required": true,
+      "default": "/contacto"
+    }
+  }
+}

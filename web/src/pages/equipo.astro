@@ -1,8 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getTeamMembers, getAboutPage } from '../lib/strapi';
+import { getEquipoPage, getTeamMembers } from '../lib/strapi';
 
-const [team, about] = await Promise.all([getTeamMembers(), getAboutPage()]);
+const [page, team] = await Promise.all([getEquipoPage(), getTeamMembers()]);
+
+if (!page) {
+  throw new Error('Equipo Page content is missing in Strapi.');
+}
 
 const GRADIENTS = [
   ['#6FA0FF', '#2E67D8'],
@@ -16,12 +20,9 @@ const GRADIENTS = [
 <Layout title="Equipo" active="equipo">
   <section class="page-header">
     <div class="container">
-      <p class="eyebrow">Nuestro equipo</p>
-      <h1>CEO + {Math.max(team.length - 1, 4)} socios, cada uno al frente de una dirección.</h1>
-      <p class="dek">
-        Un modelo matricial orientado a proyectos: cada dirección aporta su especialidad, y los
-        equipos se arman según lo que cada iniciativa realmente necesita.
-      </p>
+      <p class="eyebrow">{page.header.eyebrow}</p>
+      <h1>{page.header.heading}</h1>
+      {page.header.dek && <p class="dek">{page.header.dek}</p>}
     </div>
   </section>
 
@@ -44,19 +45,17 @@ const GRADIENTS = [
     </div>
   </section>
 
-  {about?.filosofiaHeading && (
-    <section class="section section--alt section--divider-top">
-      <div class="container grid-2">
-        <div>
-          <p class="eyebrow">Filosofía</p>
-          <h2 style="font-size:27px; font-weight:700; margin-top:10px;">{about.filosofiaHeading}</h2>
-        </div>
-        <div style="display:flex; flex-direction:column; gap:14px;">
-          {(about.filosofiaBody ?? '').split('\n\n').map((paragraph) => (
-            <p style="font-size:16px; color:var(--ink-soft); max-width:58ch;">{paragraph}</p>
-          ))}
-        </div>
+  <section class="section section--alt section--divider-top">
+    <div class="container grid-2">
+      <div>
+        <p class="eyebrow">Filosofía</p>
+        <h2 style="font-size:27px; font-weight:700; margin-top:10px;">{page.filosofia.heading}</h2>
       </div>
-    </section>
-  )}
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        {page.filosofia.body.split('\n\n').map((paragraph) => (
+          <p style="font-size:16px; color:var(--ink-soft); max-width:58ch;">{paragraph}</p>
+        ))}
+      </div>
+    </div>
+  </section>
 </Layout>

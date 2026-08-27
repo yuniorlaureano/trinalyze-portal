@@ -1,0 +1,58 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "Home Page",
+    "description": "Inicio — every section on the homepage, one component per block"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "hero": {
+      "type": "component",
+      "component": "sections.hero",
+      "repeatable": false,
+      "required": true
+    },
+    "queHacemos": {
+      "type": "component",
+      "component": "sections.about",
+      "repeatable": false,
+      "required": true
+    },
+    "serviciosHeader": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    },
+    "proyectosHeader": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    },
+    "sectoresHeader": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    },
+    "insightsHeader": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    },
+    "ctaFinal": {
+      "type": "component",
+      "component": "shared.cta-band",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

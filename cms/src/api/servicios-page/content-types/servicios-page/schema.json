@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "servicios_pages",
+  "info": {
+    "singularName": "servicios-page",
+    "pluralName": "servicios-pages",
+    "displayName": "Servicios Page",
+    "description": "Servicios — page header; the service list itself lives in the Service collection"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    },
+    "ctaFinal": {
+      "type": "component",
+      "component": "shared.cta-band",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

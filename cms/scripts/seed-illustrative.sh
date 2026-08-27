@@ -60,10 +60,59 @@ post /api/posts '{"data":{"title":"Gobierno de datos para PYMEs: por dónde empe
 post /api/posts '{"data":{"title":"IA generativa en atención al cliente: qué automatizar y qué no","slug":"ia-generativa-atencion-cliente","category":"IA","excerpt":"Dónde el toque humano sigue ganando, con datos de proyectos recientes.","body":"Dónde el toque humano sigue ganando, con datos de proyectos recientes.","publishedAt":"2026-08-27T00:00:00.000Z"}}'
 post /api/posts '{"data":{"title":"El costo real de un reporte manual mensual","slug":"costo-real-reporte-manual","category":"BI","excerpt":"Cómo calculamos el ROI de automatizar el reporting financiero.","body":"Cómo calculamos el ROI de automatizar el reporting financiero.","publishedAt":"2026-08-27T00:00:00.000Z"}}'
 
-echo "== About page (single type) =="
-put_single /api/about-page '{"data":{"queHacemosHeading":"Consultoría tecnológica con base en datos, no en suposiciones.","queHacemosBody":"TRINALYZE es una firma dominicana de consultoría tecnológica, desarrollo de software, inteligencia artificial y business intelligence. Ayudamos a organizaciones a diagnosticar procesos ineficientes, construir la infraestructura de datos que les falta, y automatizar lo que hoy hacen a mano.\n\nOperamos con un modelo matricial: equipos multidisciplinarios de consultores, desarrolladores, analistas y científicos de datos se arman por proyecto según lo que cada iniciativa realmente necesita.","hqCity":"Santo Domingo, RD","activeBusinessLines":7,"filosofiaHeading":"Colaboración transversal.","filosofiaBody":"Ningún proyecto se resuelve desde una sola disciplina. Consultores, desarrolladores, analistas y científicos de datos trabajan juntos desde el diagnóstico hasta la implementación.\n\nEs de suma importancia la participación de todos los colaboradores: cada dirección aporta su mirada antes de que una solución se dé por terminada.","publishedAt":"2026-08-27T00:00:00.000Z"}}'
+echo "== Home page (single type, component-based) =="
+put_single /api/home-page '{"data":{
+  "hero":{"eyebrow":"Datos · Tecnología · Estrategia","heading":"Transformamos datos en decisiones.\nTransformamos decisiones en resultados.","lede":"Consultoría tecnológica, inteligencia artificial, automatización y business intelligence para organizaciones dominicanas y de la región que quieren competir con evidencia — no con intuición.","primaryCtaLabel":"Solicitar diagnóstico","primaryCtaHref":"/contacto","secondaryCtaLabel":"Ver nuestro proceso","secondaryCtaHref":"/soluciones"},
+  "queHacemos":{"heading":"Consultoría tecnológica con base en datos, no en suposiciones.","body":"TRINALYZE es una firma dominicana de consultoría tecnológica, desarrollo de software, inteligencia artificial y business intelligence. Ayudamos a organizaciones a diagnosticar procesos ineficientes, construir la infraestructura de datos que les falta, y automatizar lo que hoy hacen a mano.\n\nOperamos con un modelo matricial: equipos multidisciplinarios de consultores, desarrolladores, analistas y científicos de datos se arman por proyecto según lo que cada iniciativa realmente necesita.","stats":[{"value":"Santo Domingo, RD","label":"Sede central"},{"value":"7","label":"Líneas de negocio activas"}]},
+  "serviciosHeader":{"eyebrow":"Servicios","heading":"Tres pilares, un mismo objetivo."},
+  "proyectosHeader":{"eyebrow":"Proyectos","heading":"Problema, solución, resultado."},
+  "sectoresHeader":{"eyebrow":"Sectores","heading":"Trabajamos donde los datos mueven la operación."},
+  "insightsHeader":{"eyebrow":"Insights","heading":"Notas sobre datos, IA, BI y automatización."},
+  "ctaFinal":{"eyebrow":"Siguiente paso","heading":"¿Listos para ver qué dicen sus datos?","buttonLabel":"Solicitar diagnóstico","buttonHref":"/contacto"},
+  "publishedAt":"2026-08-27T00:00:00.000Z"
+}}'
 
-echo "== Process page (single type) =="
-put_single /api/process-page '{"data":{"heading":"Un ciclo metodológico de cinco fases, retroalimentado.","intro":"De la conceptualización estratégica del negocio hasta la implementación y el soporte continuo, cada fase responde una pregunta concreta antes de pasar a la siguiente.","phases":[{"numeral":"I","title":"Negocio","question":"¿Qué problema debemos resolver?","detail":"Comprender negocio y objetivos"},{"numeral":"II","title":"Datos","question":"¿Qué información necesitamos?","detail":"Recopilar, integrar y validar datos"},{"numeral":"III","title":"Análisis","question":"¿Qué nos dicen los datos?","detail":"Identificar patrones y tendencias"},{"numeral":"IV","title":"Inteligencia","question":"¿Qué puede suceder?","detail":"Modelos predictivos y recomendaciones"},{"numeral":"V","title":"Solución","question":"¿Qué debemos implementar?","detail":"Ejecutar acciones y evaluar"}],"publishedAt":"2026-08-27T00:00:00.000Z"}}'
+echo "== Servicios page (single type) =="
+put_single /api/servicios-page '{"data":{
+  "header":{"eyebrow":"Servicios","heading":"Tres pilares, un mismo objetivo: decisiones mejores y más rápidas.","dek":"Cada línea de negocio se apoya en las otras dos — los datos alimentan la IA, la tecnología sostiene ambas. Así trabajamos cada proyecto, sin importar por cuál pilar entre el cliente."},
+  "ctaFinal":{"eyebrow":"¿No sabes por dónde empezar?","heading":"Un diagnóstico gratuito te dice cuál pilar resolver primero.","buttonLabel":"Solicitar diagnóstico","buttonHref":"/contacto"},
+  "publishedAt":"2026-08-27T00:00:00.000Z"
+}}'
+
+echo "== Soluciones page (single type) =="
+put_single /api/soluciones-page '{"data":{
+  "header":{"eyebrow":"Soluciones · Nuestro proceso","heading":"Un ciclo metodológico de cinco fases, retroalimentado.","dek":"De la conceptualización estratégica del negocio hasta la implementación y el soporte continuo, cada fase responde una pregunta concreta antes de pasar a la siguiente."},
+  "phases":[{"numeral":"I","title":"Negocio","question":"¿Qué problema debemos resolver?","detail":"Comprender negocio y objetivos"},{"numeral":"II","title":"Datos","question":"¿Qué información necesitamos?","detail":"Recopilar, integrar y validar datos"},{"numeral":"III","title":"Análisis","question":"¿Qué nos dicen los datos?","detail":"Identificar patrones y tendencias"},{"numeral":"IV","title":"Inteligencia","question":"¿Qué puede suceder?","detail":"Modelos predictivos y recomendaciones"},{"numeral":"V","title":"Solución","question":"¿Qué debemos implementar?","detail":"Ejecutar acciones y evaluar"}],
+  "ctaFinal":{"eyebrow":"Vea el proceso aplicado","heading":"Así se vio en proyectos reales de nuestros clientes.","buttonLabel":"Ver proyectos","buttonHref":"/proyectos"},
+  "publishedAt":"2026-08-27T00:00:00.000Z"
+}}'
+
+echo "== Proyectos page (single type) =="
+put_single /api/proyectos-page '{"data":{
+  "header":{"eyebrow":"Proyectos","heading":"Problema, solución, resultado.","dek":"Así documentamos cada proyecto — sin adornos, con el resultado medible al final. Los casos abajo son ilustrativos, pensados para mostrar el formato en el que reportamos resultados reales."},
+  "ctaFinal":{"eyebrow":"¿Su empresa tiene un caso parecido?","heading":"Cuéntenos qué proceso quiere mejorar.","buttonLabel":"Solicitar diagnóstico","buttonHref":"/contacto"},
+  "publishedAt":"2026-08-27T00:00:00.000Z"
+}}'
+
+echo "== Equipo page (single type) =="
+put_single /api/equipo-page '{"data":{
+  "header":{"eyebrow":"Nuestro equipo","heading":"CEO + 4 socios, cada uno al frente de una dirección.","dek":"Un modelo matricial orientado a proyectos: cada dirección aporta su especialidad, y los equipos se arman según lo que cada iniciativa realmente necesita."},
+  "filosofia":{"heading":"Colaboración transversal.","body":"Ningún proyecto se resuelve desde una sola disciplina. Consultores, desarrolladores, analistas y científicos de datos trabajan juntos desde el diagnóstico hasta la implementación.\n\nEs de suma importancia la participación de todos los colaboradores: cada dirección aporta su mirada antes de que una solución se dé por terminada."},
+  "publishedAt":"2026-08-27T00:00:00.000Z"
+}}'
+
+echo "== Insights page (single type) =="
+put_single /api/insights-page '{"data":{
+  "header":{"eyebrow":"Insights","heading":"Notas sobre datos, IA, BI y automatización.","dek":"Lo que aprendemos aplicando esto en clientes reales, en formato corto y sin relleno."},
+  "publishedAt":"2026-08-27T00:00:00.000Z"
+}}'
+
+echo "== Contacto page (single type) =="
+put_single /api/contacto-page '{"data":{
+  "header":{"eyebrow":"Contacto","heading":"Solicitar diagnóstico","dek":"Cuéntanos qué proceso o decisión quieres mejorar. Uno de nuestros representantes se pondrá en contacto contigo de inmediato, en los próximos 5 minutos."},
+  "whatsappLabel":"Escríbenos por WhatsApp (RD +1 809)",
+  "footerNote":"Con sede en Santo Domingo, República Dominicana.",
+  "publishedAt":"2026-08-27T00:00:00.000Z"
+}}'
 
 echo "Done."

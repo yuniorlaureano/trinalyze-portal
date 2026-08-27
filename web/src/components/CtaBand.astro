@@ -1,0 +1,20 @@
+---
+import type { CtaBand } from '../lib/strapi';
+
+interface Props {
+  cta: CtaBand;
+  variant?: 'primary' | 'ghost';
+}
+
+const { cta, variant = 'primary' } = Astro.props;
+---
+
+<section class="cta-band section">
+  <div class="container">
+    {cta.eyebrow && <p class="eyebrow">{cta.eyebrow}</p>}
+    <h2 style="font-size:26px; font-weight:700; max-width:26ch;">{cta.heading}</h2>
+    <a href={cta.buttonHref} class={variant === 'primary' ? 'btn btn-primary' : 'btn btn-ghost'}>
+      {cta.buttonLabel}
+    </a>
+  </div>
+</section>

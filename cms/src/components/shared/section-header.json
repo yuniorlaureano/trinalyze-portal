@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_section_headers",
+  "info": {
+    "displayName": "Section Header",
+    "icon": "layout",
+    "description": "Eyebrow + heading + optional short intro, used at the top of a page section"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "required": true
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "dek": {
+      "type": "text",
+      "description": "Optional one or two sentence intro shown under the heading"
+    }
+  }
+}

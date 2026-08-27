@@ -1,0 +1,33 @@
+{
+  "kind": "singleType",
+  "collectionName": "soluciones_pages",
+  "info": {
+    "singularName": "soluciones-page",
+    "pluralName": "soluciones-pages",
+    "displayName": "Soluciones Page",
+    "description": "Soluciones — header + the 5-phase process + closing CTA"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    },
+    "phases": {
+      "type": "component",
+      "component": "process.phase",
+      "repeatable": true
+    },
+    "ctaFinal": {
+      "type": "component",
+      "component": "shared.cta-band",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

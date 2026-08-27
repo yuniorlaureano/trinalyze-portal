@@ -1,20 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getProjects } from '../lib/strapi';
+import CtaBand from '../components/CtaBand.astro';
+import { getProyectosPage, getProjects } from '../lib/strapi';
 
-const projects = await getProjects();
+const [page, projects] = await Promise.all([getProyectosPage(), getProjects()]);
+
+if (!page) {
+  throw new Error('Proyectos Page content is missing in Strapi.');
+}
 ---
 
 <Layout title="Proyectos" active="proyectos">
   <section class="page-header">
     <div class="container">
-      <p class="eyebrow">Proyectos</p>
-      <h1>Problema, solución, resultado.</h1>
-      <p class="dek">
-        Así documentamos cada proyecto — sin adornos, con el resultado medible al final. Los casos
-        abajo son ilustrativos, pensados para mostrar el formato en el que reportamos resultados
-        reales.
-      </p>
+      <p class="eyebrow">{page.header.eyebrow}</p>
+      <h1>{page.header.heading}</h1>
+      {page.header.dek && <p class="dek">{page.header.dek}</p>}
     </div>
   </section>
 
@@ -49,11 +50,5 @@ const projects = await getProjects();
     </div>
   </section>
 
-  <section class="cta-band section">
-    <div class="container">
-      <p class="eyebrow">¿Su empresa tiene un caso parecido?</p>
-      <h2 style="font-size:26px; font-weight:700; max-width:26ch;">Cuéntenos qué proceso quiere mejorar.</h2>
-      <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
-    </div>
-  </section>
+  <CtaBand cta={page.ctaFinal} />
 </Layout>

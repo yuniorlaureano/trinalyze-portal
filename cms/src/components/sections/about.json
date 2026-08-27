@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_sections_abouts",
+  "info": {
+    "displayName": "About (Qué Hacemos)",
+    "icon": "information",
+    "description": "Who-we-are block with supporting stats"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "richtext",
+      "required": true
+    },
+    "stats": {
+      "type": "component",
+      "component": "shared.stat",
+      "repeatable": true
+    }
+  }
+}

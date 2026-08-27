@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "proyectos_pages",
+  "info": {
+    "singularName": "proyectos-page",
+    "pluralName": "proyectos-pages",
+    "displayName": "Proyectos Page",
+    "description": "Proyectos — page header; the case studies themselves live in the Project collection"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    },
+    "ctaFinal": {
+      "type": "component",
+      "component": "shared.cta-band",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

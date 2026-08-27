@@ -443,42 +443,6 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiAboutPageAboutPage extends Struct.SingleTypeSchema {
-  collectionName: 'about_pages';
-  info: {
-    description: 'Content for Que Hacemos and Filosofia';
-    displayName: 'About Page';
-    pluralName: 'about-pages';
-    singularName: 'about-page';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    activeBusinessLines: Schema.Attribute.Integer &
-      Schema.Attribute.DefaultTo<7>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    filosofiaBody: Schema.Attribute.RichText;
-    filosofiaHeading: Schema.Attribute.String;
-    hqCity: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'Santo Domingo, RD'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::about-page.about-page'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    queHacemosBody: Schema.Attribute.RichText & Schema.Attribute.Required;
-    queHacemosHeading: Schema.Attribute.String & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiContactSubmissionContactSubmission
   extends Struct.CollectionTypeSchema {
   collectionName: 'contact_submissions';
@@ -506,6 +470,148 @@ export interface ApiContactSubmissionContactSubmission
       Schema.Attribute.Private;
     message: Schema.Attribute.Text & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiContactoPageContactoPage extends Struct.SingleTypeSchema {
+  collectionName: 'contacto_pages';
+  info: {
+    description: 'Contacto \u2014 header + the small bits of copy around the form';
+    displayName: 'Contacto Page';
+    pluralName: 'contacto-pages';
+    singularName: 'contacto-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    footerNote: Schema.Attribute.String & Schema.Attribute.Required;
+    header: Schema.Attribute.Component<'shared.section-header', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contacto-page.contacto-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whatsappLabel: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiEquipoPageEquipoPage extends Struct.SingleTypeSchema {
+  collectionName: 'equipo_pages';
+  info: {
+    description: 'Equipo \u2014 header + Filosof\u00EDa; the team roster lives in the Team Member collection';
+    displayName: 'Equipo Page';
+    pluralName: 'equipo-pages';
+    singularName: 'equipo-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    filosofia: Schema.Attribute.Component<'sections.filosofia', false> &
+      Schema.Attribute.Required;
+    header: Schema.Attribute.Component<'shared.section-header', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::equipo-page.equipo-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
+  collectionName: 'home_pages';
+  info: {
+    description: 'Inicio \u2014 every section on the homepage, one component per block';
+    displayName: 'Home Page';
+    pluralName: 'home-pages';
+    singularName: 'home-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaFinal: Schema.Attribute.Component<'shared.cta-band', false> &
+      Schema.Attribute.Required;
+    hero: Schema.Attribute.Component<'sections.hero', false> &
+      Schema.Attribute.Required;
+    insightsHeader: Schema.Attribute.Component<'shared.section-header', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::home-page.home-page'
+    > &
+      Schema.Attribute.Private;
+    proyectosHeader: Schema.Attribute.Component<
+      'shared.section-header',
+      false
+    > &
+      Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    queHacemos: Schema.Attribute.Component<'sections.about', false> &
+      Schema.Attribute.Required;
+    sectoresHeader: Schema.Attribute.Component<'shared.section-header', false> &
+      Schema.Attribute.Required;
+    serviciosHeader: Schema.Attribute.Component<
+      'shared.section-header',
+      false
+    > &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiInsightsPageInsightsPage extends Struct.SingleTypeSchema {
+  collectionName: 'insights_pages';
+  info: {
+    description: 'Insights \u2014 page header; the articles themselves live in the Post collection';
+    displayName: 'Insights Page';
+    pluralName: 'insights-pages';
+    singularName: 'insights-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    header: Schema.Attribute.Component<'shared.section-header', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::insights-page.insights-page'
+    > &
+      Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -552,37 +658,6 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiProcessPageProcessPage extends Struct.SingleTypeSchema {
-  collectionName: 'process_pages';
-  info: {
-    description: 'Content for the Soluciones / Nuestro Proceso page';
-    displayName: 'Process Page';
-    pluralName: 'process-pages';
-    singularName: 'process-page';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    heading: Schema.Attribute.String & Schema.Attribute.Required;
-    intro: Schema.Attribute.Text;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::process-page.process-page'
-    > &
-      Schema.Attribute.Private;
-    phases: Schema.Attribute.Component<'process.phase', true>;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   collectionName: 'projects';
   info: {
@@ -617,6 +692,38 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     solution: Schema.Attribute.Text & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiProyectosPageProyectosPage extends Struct.SingleTypeSchema {
+  collectionName: 'proyectos_pages';
+  info: {
+    description: 'Proyectos \u2014 page header; the case studies themselves live in the Project collection';
+    displayName: 'Proyectos Page';
+    pluralName: 'proyectos-pages';
+    singularName: 'proyectos-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaFinal: Schema.Attribute.Component<'shared.cta-band', false> &
+      Schema.Attribute.Required;
+    header: Schema.Attribute.Component<'shared.section-header', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::proyectos-page.proyectos-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -687,6 +794,72 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     summary: Schema.Attribute.Text;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiServiciosPageServiciosPage extends Struct.SingleTypeSchema {
+  collectionName: 'servicios_pages';
+  info: {
+    description: 'Servicios \u2014 page header; the service list itself lives in the Service collection';
+    displayName: 'Servicios Page';
+    pluralName: 'servicios-pages';
+    singularName: 'servicios-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaFinal: Schema.Attribute.Component<'shared.cta-band', false> &
+      Schema.Attribute.Required;
+    header: Schema.Attribute.Component<'shared.section-header', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::servicios-page.servicios-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSolucionesPageSolucionesPage
+  extends Struct.SingleTypeSchema {
+  collectionName: 'soluciones_pages';
+  info: {
+    description: 'Soluciones \u2014 header + the 5-phase process + closing CTA';
+    displayName: 'Soluciones Page';
+    pluralName: 'soluciones-pages';
+    singularName: 'soluciones-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaFinal: Schema.Attribute.Component<'shared.cta-band', false> &
+      Schema.Attribute.Required;
+    header: Schema.Attribute.Component<'shared.section-header', false> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::soluciones-page.soluciones-page'
+    > &
+      Schema.Attribute.Private;
+    phases: Schema.Attribute.Component<'process.phase', true>;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1242,13 +1415,18 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::about-page.about-page': ApiAboutPageAboutPage;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
+      'api::contacto-page.contacto-page': ApiContactoPageContactoPage;
+      'api::equipo-page.equipo-page': ApiEquipoPageEquipoPage;
+      'api::home-page.home-page': ApiHomePageHomePage;
+      'api::insights-page.insights-page': ApiInsightsPageInsightsPage;
       'api::post.post': ApiPostPost;
-      'api::process-page.process-page': ApiProcessPageProcessPage;
       'api::project.project': ApiProjectProject;
+      'api::proyectos-page.proyectos-page': ApiProyectosPageProyectosPage;
       'api::sector.sector': ApiSectorSector;
       'api::service.service': ApiServiceService;
+      'api::servicios-page.servicios-page': ApiServiciosPageServiciosPage;
+      'api::soluciones-page.soluciones-page': ApiSolucionesPageSolucionesPage;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
