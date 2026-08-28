@@ -17,6 +17,8 @@ Astro corre con el adaptador Node en modo `standalone` y consume la API
 REST de Strapi — no hay contenido hardcodeado en el frontend, todo sale del
 CMS.
 
+Para desplegar esto en un VPS con Docker, ver [`DEPLOY.md`](DEPLOY.md).
+
 ## Cómo correrlo localmente
 
 ```bash

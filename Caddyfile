@@ -1,0 +1,29 @@
+# Reverse proxy config for the VPS.
+#
+# No domain yet: each service is reachable by port on the VPS's IP.
+#   http://<VPS_IP>        -> the Astro site
+#   http://<VPS_IP>:1337   -> Strapi (admin panel + API)
+#
+# Once a domain is pointed at the VPS, replace the two blocks below with
+# named-host blocks and Caddy will fetch HTTPS certificates automatically
+# — no other config changes needed. For example:
+#
+#   trinalyze.com {
+#     reverse_proxy web:4321
+#   }
+#
+#   cms.trinalyze.com {
+#     reverse_proxy cms:1337
+#   }
+#
+# After switching to domain blocks, also update PUBLIC_STRAPI_URL in your
+# .env to the new https://cms.trinalyze.com address and rebuild the web
+# image (see DEPLOY.md) — that value is baked in at build time.
+
+:80 {
+	reverse_proxy web:4321
+}
+
+:1337 {
+	reverse_proxy cms:1337
+}

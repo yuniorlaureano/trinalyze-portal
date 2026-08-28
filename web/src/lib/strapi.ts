@@ -1,8 +1,15 @@
 // Thin fetch helper for the Strapi REST API. Runs server-side (in .astro
 // frontmatter), so it uses the private STRAPI_URL — not the PUBLIC_ one,
 // which is reserved for client-side code (see the ContactForm island).
-
-const STRAPI_URL = import.meta.env.STRAPI_URL ?? 'http://localhost:1337';
+//
+// Reads from `process.env` first (not `import.meta.env`): in SSR builds,
+// Vite/Astro statically inline `import.meta.env.*` at BUILD time, so a
+// value baked into the Docker image at build time would never change per
+// deployment. `process.env` is read at real request time by the running
+// Node server, which is what lets the same built image point at a
+// different Strapi host per environment (e.g. the `cms` service name
+// inside Docker) without a rebuild.
+const STRAPI_URL = process.env.STRAPI_URL ?? import.meta.env.STRAPI_URL ?? 'http://localhost:1337';
 
 interface StrapiListResponse<T> {
   data: T[];
