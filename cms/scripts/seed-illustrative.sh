@@ -117,4 +117,12 @@ put_single /api/contacto-page '{"data":{
   "publishedAt":"2026-08-27T00:00:00.000Z"
 }}'
 
+echo "== Site settings (single type, global footer) =="
+put_single /api/site-setting '{"data":{
+  "footerCopyright":"© 2026 TRINALYZE SRL — Santo Domingo, República Dominicana.",
+  "footerLegalLinks":[{"label":"Aviso Legal","href":"#"},{"label":"Política de Privacidad","href":"#"}],
+  "footerSocialLinks":[{"platform":"Facebook","href":"#"},{"platform":"X","href":"#"},{"platform":"LinkedIn","href":"#"}],
+  "publishedAt":"2026-08-27T00:00:00.000Z"
+}}'
+
 echo "Done."
