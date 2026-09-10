@@ -22,6 +22,12 @@
       "type": "string",
       "required": true
     },
+    "whatsappHref": {
+      "type": "string",
+      "required": true,
+      "default": "#",
+      "description": "Full WhatsApp link, e.g. https://wa.me/18095550100 — replace the default '#' with the real number before launch"
+    },
     "footerNote": {
       "type": "string",
       "required": true

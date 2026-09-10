@@ -23,6 +23,10 @@
     "company": {
       "type": "string"
     },
+    "phone": {
+      "type": "string",
+      "description": "Optional — lets the team follow up by call/WhatsApp within the 5-minute promise"
+    },
     "message": {
       "type": "text",
       "required": true

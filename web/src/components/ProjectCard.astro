@@ -1,0 +1,27 @@
+---
+import type { Project } from '../lib/strapi';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<div class="card card--project">
+  <span class="tag" style="background:var(--bg-alt); color:var(--ink-soft); align-self:flex-start;">
+    {project.sector}{project.city ? ` — ${project.city}` : ''}
+  </span>
+  <div>
+    <p class="block-label" style="color:var(--coral);">Problema</p>
+    <p class="block-text">{project.problem}</p>
+  </div>
+  <div>
+    <p class="block-label" style="color:var(--blue);">Solución</p>
+    <p class="block-text">{project.solution}</p>
+  </div>
+  <div>
+    <p class="block-label" style="color:var(--mint);">Resultado</p>
+    <p class="block-result">{project.result}</p>
+  </div>
+</div>

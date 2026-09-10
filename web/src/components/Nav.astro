@@ -19,11 +19,51 @@ const links = [
 <header class="nav">
   <div class="container nav-inner">
     <a href="/" class="logo"><img src="/assets/logo-official.jpg" alt="TRIN∆LYZE" /></a>
-    <nav class="nav-links">
+    <nav class="nav-links" id="nav-links">
       {links.map((link) => (
         <a href={link.href} class={link.id === active ? 'active' : ''}>{link.label}</a>
       ))}
     </nav>
-    <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
+    <div class="nav-actions">
+      <a href="/contacto" class="btn btn-primary">Solicitar diagnóstico</a>
+      <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+        <svg class="icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="5" y1="5" x2="19" y2="19"></line>
+          <line x1="19" y1="5" x2="5" y2="19"></line>
+        </svg>
+      </button>
+    </div>
   </div>
 </header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const menu = document.getElementById('nav-links');
+
+  function closeMenu() {
+    toggle?.setAttribute('aria-expanded', 'false');
+    menu?.classList.remove('is-open');
+    document.body.classList.remove('nav-open');
+  }
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    menu?.classList.toggle('is-open');
+    document.body.classList.toggle('nav-open');
+  });
+
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+
+  // Closing the mobile menu when resizing back up avoids it staying
+  // open (and blocking clicks) if someone rotates their device or
+  // resizes past the breakpoint.
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 860) closeMenu();
+  });
+</script>

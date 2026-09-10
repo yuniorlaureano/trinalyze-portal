@@ -23,6 +23,12 @@
       "component": "process.phase",
       "repeatable": true
     },
+    "sectoresHeader": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false,
+      "required": true
+    },
     "ctaFinal": {
       "type": "component",
       "component": "shared.cta-band",

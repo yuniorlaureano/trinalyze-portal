@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Settings",
+    "description": "Global content shared by every page — currently the footer"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "footerCopyright": {
+      "type": "string",
+      "required": true
+    },
+    "footerLegalLinks": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    },
+    "footerSocialLinks": {
+      "type": "component",
+      "component": "shared.social-link",
+      "repeatable": true
+    }
+  }
+}

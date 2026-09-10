@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_social_links",
+  "info": {
+    "displayName": "Social Link",
+    "icon": "globe",
+    "description": "A social network URL — the icon is chosen in code from the platform"
+  },
+  "options": {},
+  "attributes": {
+    "platform": {
+      "type": "enumeration",
+      "enum": ["Facebook", "X", "LinkedIn", "Instagram", "WhatsApp"],
+      "required": true
+    },
+    "href": {
+      "type": "string",
+      "required": true,
+      "default": "#"
+    }
+  }
+}

@@ -47,8 +47,8 @@ const PHASE_COLOR = ['var(--ink-faint)', 'var(--ink-faint)', 'var(--blue)', 'var
 
   <section class="sectors-band">
     <div class="container">
-      <p class="eyebrow">Sectores</p>
-      <h2>Trabajamos donde los datos mueven la operación.</h2>
+      <p class="eyebrow">{page.sectoresHeader.eyebrow}</p>
+      <h2>{page.sectoresHeader.heading}</h2>
       <div class="chip-row">
         {sectors.map((sector) => <span class="chip">{sector.name}</span>)}
       </div>

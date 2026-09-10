@@ -19,6 +19,7 @@ export default function ContactForm() {
       data: {
         name: formData.get('name'),
         email: formData.get('email'),
+        phone: formData.get('phone'),
         company: formData.get('company'),
         message: formData.get('message'),
       },
@@ -66,6 +67,10 @@ export default function ContactForm() {
       <div className="field">
         <label htmlFor="email">Email</label>
         <input id="email" name="email" type="email" placeholder="tu@empresa.com" required />
+      </div>
+      <div className="field">
+        <label htmlFor="phone">Teléfono (opcional)</label>
+        <input id="phone" name="phone" type="tel" placeholder="+1 809 000 0000" />
       </div>
       <div className="field">
         <label htmlFor="company">Empresa</label>

@@ -1,0 +1,31 @@
+---
+import type { Service } from '../lib/strapi';
+import { PILLAR_ICON } from '../lib/ui';
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const icon = PILLAR_ICON[service.pillar] ?? PILLAR_ICON['Technology'];
+---
+
+<div class="card card--service" style={`border-top-color:${icon.color};`}>
+  <svg
+    width="26"
+    height="26"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={icon.color}
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    set:html={icon.path}
+  />
+  <span class="tag" style={`background:color-mix(in srgb, ${icon.color} 14%, white); color:${icon.color};`}>
+    {service.pillar}
+  </span>
+  <h3>{service.title}</h3>
+  <p>{service.summary}</p>
+</div>

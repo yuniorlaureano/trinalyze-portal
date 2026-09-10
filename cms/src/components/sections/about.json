@@ -7,6 +7,10 @@
   },
   "options": {},
   "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "required": true
+    },
     "heading": {
       "type": "string",
       "required": true

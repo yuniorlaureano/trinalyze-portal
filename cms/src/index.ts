@@ -19,6 +19,7 @@ const PUBLIC_READ_ACTIONS = [
   'api::equipo-page.equipo-page.find',
   'api::insights-page.insights-page.find',
   'api::contacto-page.contacto-page.find',
+  'api::site-setting.site-setting.find',
 ];
 
 // The only write the public role is allowed to do: submit the contact form.

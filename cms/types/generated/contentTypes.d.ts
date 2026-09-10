@@ -470,6 +470,7 @@ export interface ApiContactSubmissionContactSubmission
       Schema.Attribute.Private;
     message: Schema.Attribute.Text & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -505,6 +506,9 @@ export interface ApiContactoPageContactoPage extends Struct.SingleTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    whatsappHref: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#'>;
     whatsappLabel: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -832,6 +836,37 @@ export interface ApiServiciosPageServiciosPage extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
+  collectionName: 'site_settings';
+  info: {
+    description: 'Global content shared by every page \u2014 currently the footer';
+    displayName: 'Site Settings';
+    pluralName: 'site-settings';
+    singularName: 'site-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    footerCopyright: Schema.Attribute.String & Schema.Attribute.Required;
+    footerLegalLinks: Schema.Attribute.Component<'shared.link', true>;
+    footerSocialLinks: Schema.Attribute.Component<'shared.social-link', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::site-setting.site-setting'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSolucionesPageSolucionesPage
   extends Struct.SingleTypeSchema {
   collectionName: 'soluciones_pages';
@@ -860,6 +895,8 @@ export interface ApiSolucionesPageSolucionesPage
       Schema.Attribute.Private;
     phases: Schema.Attribute.Component<'process.phase', true>;
     publishedAt: Schema.Attribute.DateTime;
+    sectoresHeader: Schema.Attribute.Component<'shared.section-header', false> &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1426,6 +1463,7 @@ declare module '@strapi/strapi' {
       'api::sector.sector': ApiSectorSector;
       'api::service.service': ApiServiceService;
       'api::servicios-page.servicios-page': ApiServiciosPageServiciosPage;
+      'api::site-setting.site-setting': ApiSiteSettingSiteSetting;
       'api::soluciones-page.soluciones-page': ApiSolucionesPageSolucionesPage;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
       'plugin::content-releases.release': PluginContentReleasesRelease;

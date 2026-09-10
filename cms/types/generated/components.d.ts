@@ -24,6 +24,7 @@ export interface SectionsAbout extends Struct.ComponentSchema {
   };
   attributes: {
     body: Schema.Attribute.RichText & Schema.Attribute.Required;
+    eyebrow: Schema.Attribute.String & Schema.Attribute.Required;
     heading: Schema.Attribute.String & Schema.Attribute.Required;
     stats: Schema.Attribute.Component<'shared.stat', true>;
   };
@@ -38,6 +39,7 @@ export interface SectionsFilosofia extends Struct.ComponentSchema {
   };
   attributes: {
     body: Schema.Attribute.RichText & Schema.Attribute.Required;
+    eyebrow: Schema.Attribute.String & Schema.Attribute.Required;
     heading: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -79,6 +81,21 @@ export interface SharedCtaBand extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_links';
+  info: {
+    description: 'A label + URL pair, e.g. a footer legal link';
+    displayName: 'Link';
+    icon: 'link';
+  };
+  attributes: {
+    href: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#'>;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedSectionHeader extends Struct.ComponentSchema {
   collectionName: 'components_shared_section_headers';
   info: {
@@ -90,6 +107,24 @@ export interface SharedSectionHeader extends Struct.ComponentSchema {
     dek: Schema.Attribute.Text;
     eyebrow: Schema.Attribute.String & Schema.Attribute.Required;
     heading: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedSocialLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_social_links';
+  info: {
+    description: 'A social network URL \u2014 the icon is chosen in code from the platform';
+    displayName: 'Social Link';
+    icon: 'globe';
+  };
+  attributes: {
+    href: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#'>;
+    platform: Schema.Attribute.Enumeration<
+      ['Facebook', 'X', 'LinkedIn', 'Instagram', 'WhatsApp']
+    > &
+      Schema.Attribute.Required;
   };
 }
 
@@ -114,7 +149,9 @@ declare module '@strapi/strapi' {
       'sections.filosofia': SectionsFilosofia;
       'sections.hero': SectionsHero;
       'shared.cta-band': SharedCtaBand;
+      'shared.link': SharedLink;
       'shared.section-header': SharedSectionHeader;
+      'shared.social-link': SharedSocialLink;
       'shared.stat': SharedStat;
     }
   }

@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CtaBand from '../components/CtaBand.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PostCard from '../components/PostCard.astro';
 import { getHomePage, getServices, getProjects, getSectors, getPosts } from '../lib/strapi';
 
 const [home, services, projects, sectors, posts] = await Promise.all([
@@ -14,28 +17,6 @@ const [home, services, projects, sectors, posts] = await Promise.all([
 if (!home) {
   throw new Error('Home Page content is missing in Strapi — create it at /admin/content-manager/single-types/api::home-page.home-page');
 }
-
-const PILLAR_ICON: Record<string, { color: string; path: string }> = {
-  'Data & Analytics': {
-    color: 'var(--blue)',
-    path: '<line x1="4" y1="20" x2="4" y2="11"></line><line x1="12" y1="20" x2="12" y2="5"></line><line x1="20" y1="20" x2="20" y2="14"></line>',
-  },
-  Technology: {
-    color: 'var(--ink-soft)',
-    path: '<rect x="7" y="7" width="10" height="10" rx="1.5"></rect><line x1="10" y1="2" x2="10" y2="7"></line><line x1="14" y1="2" x2="14" y2="7"></line><line x1="10" y1="17" x2="10" y2="22"></line><line x1="14" y1="17" x2="14" y2="22"></line><line x1="2" y1="10" x2="7" y2="10"></line><line x1="2" y1="14" x2="7" y2="14"></line><line x1="17" y1="10" x2="22" y2="10"></line><line x1="17" y1="14" x2="22" y2="14"></line>',
-  },
-  'AI & Automation': {
-    color: 'var(--mint)',
-    path: '<circle cx="6" cy="6" r="2.2"></circle><circle cx="18" cy="6" r="2.2"></circle><circle cx="12" cy="18" r="2.2"></circle><line x1="7.6" y1="7.4" x2="10.6" y2="16"></line><line x1="16.4" y1="7.4" x2="13.4" y2="16"></line><line x1="8.2" y1="6" x2="15.8" y2="6"></line>',
-  },
-};
-
-const CATEGORY_COLOR: Record<string, string> = {
-  IA: 'var(--mint)',
-  BI: 'var(--blue)',
-  Automatizacion: 'var(--mint)',
-  Data: 'var(--blue)',
-};
 
 const featuredServices = services.slice(0, 3);
 const featuredProjects = projects.slice(0, 3);
@@ -143,7 +124,7 @@ const heroLines = home.hero.heading.split('\n');
   <section class="section">
     <div class="container grid-2">
       <div>
-        <p class="eyebrow">Qué hacemos</p>
+        <p class="eyebrow">{home.queHacemos.eyebrow}</p>
         <h2 style="font-size:29px; font-weight:700; margin-top:10px;">{home.queHacemos.heading}</h2>
       </div>
       <div style="display:flex; flex-direction:column; gap:18px;">
@@ -176,30 +157,7 @@ const heroLines = home.hero.heading.split('\n');
         >
       </div>
       <div class="grid-3" style="margin-top:40px;">
-        {featuredServices.map((service) => {
-          const icon = PILLAR_ICON[service.pillar] ?? PILLAR_ICON['Technology'];
-          return (
-            <div class="card card--service" style={`border-top-color:${icon.color};`}>
-              <svg
-                width="26"
-                height="26"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={icon.color}
-                stroke-width="1.8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-                set:html={icon.path}
-              />
-              <span class="tag" style={`background:color-mix(in srgb, ${icon.color} 14%, white); color:${icon.color};`}>
-                {service.pillar}
-              </span>
-              <h3>{service.title}</h3>
-              <p>{service.summary}</p>
-            </div>
-          );
-        })}
+        {featuredServices.map((service) => <ServiceCard service={service} />)}
       </div>
     </div>
   </section>
@@ -218,25 +176,7 @@ const heroLines = home.hero.heading.split('\n');
         >
       </div>
       <div class="grid-3" style="margin-top:36px;">
-        {featuredProjects.map((project) => (
-          <div class="card card--project">
-            <span class="tag" style="background:var(--bg-alt); color:var(--ink-soft); align-self:flex-start;">
-              {project.sector}{project.city ? ` — ${project.city}` : ''}
-            </span>
-            <div>
-              <p class="block-label" style="color:var(--coral);">Problema</p>
-              <p class="block-text">{project.problem}</p>
-            </div>
-            <div>
-              <p class="block-label" style="color:var(--blue);">Solución</p>
-              <p class="block-text">{project.solution}</p>
-            </div>
-            <div>
-              <p class="block-label" style="color:var(--mint);">Resultado</p>
-              <p class="block-result">{project.result}</p>
-            </div>
-          </div>
-        ))}
+        {featuredProjects.map((project) => <ProjectCard project={project} />)}
       </div>
       <p style="font-family:var(--font-mono); font-size:11.5px; color:var(--ink-faint); margin-top:20px;">
         Casos ilustrativos — formato de referencia.
@@ -268,19 +208,7 @@ const heroLines = home.hero.heading.split('\n');
         >
       </div>
       <div class="grid-3" style="margin-top:40px;">
-        {featuredPosts.map((post) => (
-          <a href="/insights" class="insight-card">
-            <span
-              class="tag"
-              style={`background:color-mix(in srgb, ${CATEGORY_COLOR[post.category] ?? 'var(--blue)'} 14%, white); color:${CATEGORY_COLOR[post.category] ?? 'var(--blue)'}; align-self:flex-start;`}
-            >
-              {post.category}
-            </span>
-            <h4>{post.title}</h4>
-            <p>{post.excerpt}</p>
-            <span class="read-more">Leer más &rarr;</span>
-          </a>
-        ))}
+        {featuredPosts.map((post) => <PostCard post={post} />)}
       </div>
     </div>
   </section>

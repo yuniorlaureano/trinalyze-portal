@@ -64,12 +64,14 @@ export interface Hero {
 }
 
 export interface AboutSection {
+  eyebrow: string;
   heading: string;
   body: string;
   stats: Stat[];
 }
 
 export interface FilosofiaSection {
+  eyebrow: string;
   heading: string;
   body: string;
 }
@@ -156,6 +158,7 @@ export interface ServiciosPage {
 export interface SolucionesPage {
   header: SectionHeader;
   phases: ProcessPhase[];
+  sectoresHeader: SectionHeader;
   ctaFinal: CtaBand;
 }
 
@@ -176,6 +179,7 @@ export interface InsightsPage {
 export interface ContactoPage {
   header: SectionHeader;
   whatsappLabel: string;
+  whatsappHref: string;
   footerNote: string;
 }
 
@@ -210,6 +214,39 @@ export async function getPosts(): Promise<Post[]> {
   return res?.data ?? [];
 }
 
+export interface PostsPage {
+  posts: Post[];
+  page: number;
+  pageCount: number;
+  total: number;
+}
+
+export async function getPostsPage(options: {
+  category?: string;
+  page?: number;
+  pageSize?: number;
+} = {}): Promise<PostsPage> {
+  const { category, page = 1, pageSize = 6 } = options;
+  let query = `pagination[page]=${page}&pagination[pageSize]=${pageSize}&sort=publishedDate:desc`;
+  if (category) {
+    query += `&filters[category][$eq]=${encodeURIComponent(category)}`;
+  }
+  const res = await request<StrapiListResponse<Post>>(`/api/posts?${query}`);
+  return {
+    posts: res?.data ?? [],
+    page: res?.meta.pagination.page ?? 1,
+    pageCount: res?.meta.pagination.pageCount ?? 1,
+    total: res?.meta.pagination.total ?? 0,
+  };
+}
+
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  const res = await request<StrapiListResponse<Post>>(
+    `/api/posts?filters[slug][$eq]=${encodeURIComponent(slug)}&pagination[pageSize]=1`
+  );
+  return res?.data?.[0] ?? null;
+}
+
 // ---------- page getters ----------
 
 export async function getHomePage(): Promise<HomePage | null> {
@@ -228,7 +265,7 @@ export async function getServiciosPage(): Promise<ServiciosPage | null> {
 
 export async function getSolucionesPage(): Promise<SolucionesPage | null> {
   const res = await request<StrapiSingleResponse<SolucionesPage>>(
-    '/api/soluciones-page?populate[header]=true&populate[phases]=true&populate[ctaFinal]=true'
+    '/api/soluciones-page?populate[header]=true&populate[phases]=true&populate[sectoresHeader]=true&populate[ctaFinal]=true'
   );
   return res?.data ?? null;
 }
@@ -254,5 +291,30 @@ export async function getInsightsPage(): Promise<InsightsPage | null> {
 
 export async function getContactoPage(): Promise<ContactoPage | null> {
   const res = await request<StrapiSingleResponse<ContactoPage>>('/api/contacto-page?populate[header]=true');
+  return res?.data ?? null;
+}
+
+// ---------- global site settings ----------
+
+export interface LinkItem {
+  label: string;
+  href: string;
+}
+
+export interface SocialLink {
+  platform: 'Facebook' | 'X' | 'LinkedIn' | 'Instagram' | 'WhatsApp';
+  href: string;
+}
+
+export interface SiteSettings {
+  footerCopyright: string;
+  footerLegalLinks: LinkItem[];
+  footerSocialLinks: SocialLink[];
+}
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  const res = await request<StrapiSingleResponse<SiteSettings>>(
+    '/api/site-setting?populate[footerLegalLinks]=true&populate[footerSocialLinks]=true'
+  );
   return res?.data ?? null;
 }
