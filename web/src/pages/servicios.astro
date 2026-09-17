@@ -14,9 +14,9 @@ if (!page) {
 <Layout title="Servicios" active="servicios">
   <section class="page-header">
     <div class="container">
-      <p class="eyebrow">{page.header.eyebrow}</p>
-      <h1>{page.header.heading}</h1>
-      {page.header.dek && <p class="dek">{page.header.dek}</p>}
+      {page.header?.eyebrow && <p class="eyebrow">{page.header.eyebrow}</p>}
+      <h1>{page.header?.heading ?? 'Servicios'}</h1>
+      {page.header?.dek && <p class="dek">{page.header.dek}</p>}
     </div>
   </section>
 

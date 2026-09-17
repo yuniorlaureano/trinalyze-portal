@@ -20,9 +20,9 @@ const GRADIENTS = [
 <Layout title="Equipo" active="equipo">
   <section class="page-header">
     <div class="container">
-      <p class="eyebrow">{page.header.eyebrow}</p>
-      <h1>{page.header.heading}</h1>
-      {page.header.dek && <p class="dek">{page.header.dek}</p>}
+      {page.header?.eyebrow && <p class="eyebrow">{page.header.eyebrow}</p>}
+      <h1>{page.header?.heading ?? 'Nuestro equipo'}</h1>
+      {page.header?.dek && <p class="dek">{page.header.dek}</p>}
     </div>
   </section>
 
@@ -46,17 +46,19 @@ const GRADIENTS = [
     </div>
   </section>
 
-  <section class="section section--alt section--divider-top">
-    <div class="container grid-2">
-      <div>
-        <p class="eyebrow">{page.filosofia.eyebrow}</p>
-        <h2 style="font-size:27px; font-weight:700; margin-top:10px;">{page.filosofia.heading}</h2>
+  {page.filosofia && (
+    <section class="section section--alt section--divider-top">
+      <div class="container grid-2">
+        <div>
+          {page.filosofia.eyebrow && <p class="eyebrow">{page.filosofia.eyebrow}</p>}
+          <h2 style="font-size:27px; font-weight:700; margin-top:10px;">{page.filosofia.heading}</h2>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          {(page.filosofia.body ?? '').split('\n\n').map((paragraph) => (
+            <p style="font-size:16px; color:var(--ink-soft); max-width:58ch;">{paragraph}</p>
+          ))}
+        </div>
       </div>
-      <div style="display:flex; flex-direction:column; gap:14px;">
-        {page.filosofia.body.split('\n\n').map((paragraph) => (
-          <p style="font-size:16px; color:var(--ink-soft); max-width:58ch;">{paragraph}</p>
-        ))}
-      </div>
-    </div>
-  </section>
+    </section>
+  )}
 </Layout>

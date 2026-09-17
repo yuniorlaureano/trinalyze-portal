@@ -10,22 +10,23 @@ if (!page) {
 }
 
 const PHASE_COLOR = ['var(--ink-faint)', 'var(--ink-faint)', 'var(--blue)', 'var(--blue)', 'var(--mint)'];
+const phases = page.phases ?? [];
 ---
 
 <Layout title="Soluciones" active="soluciones">
   <section class="page-header">
     <div class="container">
-      <p class="eyebrow">{page.header.eyebrow}</p>
-      <h1>{page.header.heading}</h1>
-      {page.header.dek && <p class="dek">{page.header.dek}</p>}
+      {page.header?.eyebrow && <p class="eyebrow">{page.header.eyebrow}</p>}
+      <h1>{page.header?.heading ?? 'Soluciones'}</h1>
+      {page.header?.dek && <p class="dek">{page.header.dek}</p>}
     </div>
   </section>
 
   <section class="section">
     <div class="container">
       <div class="process-row" style="margin-top:0;">
-        {page.phases.map((phase, i) => (
-          <div class="process-step" style={i === page.phases.length - 1 ? 'border-right:none; margin-right:0;' : ''}>
+        {phases.map((phase, i) => (
+          <div class="process-step" style={i === phases.length - 1 ? 'border-right:none; margin-right:0;' : ''}>
             <div class="step-label">
               <svg width="12" height="12" viewBox="0 0 100 100" aria-hidden="true">
                 <polygon
@@ -47,8 +48,8 @@ const PHASE_COLOR = ['var(--ink-faint)', 'var(--ink-faint)', 'var(--blue)', 'var
 
   <section class="sectors-band">
     <div class="container">
-      <p class="eyebrow">{page.sectoresHeader.eyebrow}</p>
-      <h2>{page.sectoresHeader.heading}</h2>
+      {page.sectoresHeader?.eyebrow && <p class="eyebrow">{page.sectoresHeader.eyebrow}</p>}
+      <h2>{page.sectoresHeader?.heading ?? 'Sectores'}</h2>
       <div class="chip-row">
         {sectors.map((sector) => <span class="chip">{sector.name}</span>)}
       </div>

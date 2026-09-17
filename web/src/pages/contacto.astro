@@ -14,9 +14,9 @@ if (!page) {
   <section class="section" style="padding-top:64px;">
     <div class="container grid-2">
       <div>
-        <p class="eyebrow">{page.header.eyebrow}</p>
-        <h1 style="font-size:32px; font-weight:700; margin-top:10px; max-width:16ch;">{page.header.heading}</h1>
-        {page.header.dek && (
+        {page.header?.eyebrow && <p class="eyebrow">{page.header.eyebrow}</p>}
+        <h1 style="font-size:32px; font-weight:700; margin-top:10px; max-width:16ch;">{page.header?.heading ?? 'Contacto'}</h1>
+        {page.header?.dek && (
           <p style="font-size:15.5px; color:var(--ink-soft); margin-top:16px; max-width:42ch;">{page.header.dek}</p>
         )}
         <a

@@ -3,3 +3,7 @@ node_modules/
 .env
 .env.*
 !.env.*.example
+
+# Strapi data exports/backups — never belong in source control,
+# encrypted or not. Keep these in a proper backup location instead.
+*.tar.gz.enc

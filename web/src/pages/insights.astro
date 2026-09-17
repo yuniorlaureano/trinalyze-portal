@@ -38,9 +38,9 @@ const pageNumbers = Array.from({ length: pageCount }, (_, i) => i + 1);
 <Layout title="Insights" active="insights">
   <section class="page-header">
     <div class="container">
-      <p class="eyebrow">{insightsPage.header.eyebrow}</p>
-      <h1>{insightsPage.header.heading}</h1>
-      {insightsPage.header.dek && <p class="dek">{insightsPage.header.dek}</p>}
+      {insightsPage.header?.eyebrow && <p class="eyebrow">{insightsPage.header.eyebrow}</p>}
+      <h1>{insightsPage.header?.heading ?? 'Insights'}</h1>
+      {insightsPage.header?.dek && <p class="dek">{insightsPage.header.dek}</p>}
     </div>
   </section>
 

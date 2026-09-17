@@ -21,7 +21,8 @@ if (!home) {
 const featuredServices = services.slice(0, 3);
 const featuredProjects = projects.slice(0, 3);
 const featuredPosts = posts.slice(0, 3);
-const heroLines = home.hero.heading.split('\n');
+const heroLines = (home.hero?.heading ?? '').split('\n');
+const stats = home.queHacemos?.stats ?? [];
 ---
 
 <Layout title="Datos, Tecnología, Estrategia" active="inicio">
@@ -44,7 +45,7 @@ const heroLines = home.hero.heading.split('\n');
     </svg>
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">{home.hero.eyebrow}</p>
+        {home.hero?.eyebrow && <p class="eyebrow">{home.hero.eyebrow}</p>}
         <h1>
           {heroLines.map((line, i) => (
             <>
@@ -53,10 +54,12 @@ const heroLines = home.hero.heading.split('\n');
             </>
           ))}
         </h1>
-        <p class="lede">{home.hero.lede}</p>
+        {home.hero?.lede && <p class="lede">{home.hero.lede}</p>}
         <div class="hero-actions">
-          <a href={home.hero.primaryCtaHref} class="btn btn-primary">{home.hero.primaryCtaLabel}</a>
-          {home.hero.secondaryCtaLabel && (
+          {home.hero?.primaryCtaLabel && (
+            <a href={home.hero.primaryCtaHref ?? '/contacto'} class="btn btn-primary">{home.hero.primaryCtaLabel}</a>
+          )}
+          {home.hero?.secondaryCtaLabel && (
             <a href={home.hero.secondaryCtaHref ?? '#'} class="btn btn-ghost--onhero">
               {home.hero.secondaryCtaLabel}
             </a>
@@ -124,15 +127,15 @@ const heroLines = home.hero.heading.split('\n');
   <section class="section">
     <div class="container grid-2">
       <div>
-        <p class="eyebrow">{home.queHacemos.eyebrow}</p>
-        <h2 style="font-size:29px; font-weight:700; margin-top:10px;">{home.queHacemos.heading}</h2>
+        {home.queHacemos?.eyebrow && <p class="eyebrow">{home.queHacemos.eyebrow}</p>}
+        <h2 style="font-size:29px; font-weight:700; margin-top:10px;">{home.queHacemos?.heading ?? 'Qué hacemos'}</h2>
       </div>
       <div style="display:flex; flex-direction:column; gap:18px;">
-        {home.queHacemos.body.split('\n\n').map((paragraph) => (
+        {(home.queHacemos?.body ?? '').split('\n\n').map((paragraph) => (
           <p style="font-size:16.5px; color:var(--ink-soft); max-width:60ch;">{paragraph}</p>
         ))}
         <div style="display:flex; gap:28px; margin-top:8px; flex-wrap:wrap;">
-          {home.queHacemos.stats.map((stat) => (
+          {stats.map((stat) => (
             <div>
               <p style="font-family:var(--font-mono); font-size:20px; font-weight:500;">{stat.value}</p>
               <p style="font-size:13px; color:var(--ink-faint);">{stat.label}</p>
@@ -147,9 +150,9 @@ const heroLines = home.hero.heading.split('\n');
     <div class="container">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
         <div>
-          <p class="eyebrow">{home.serviciosHeader.eyebrow}</p>
+          {home.serviciosHeader?.eyebrow && <p class="eyebrow">{home.serviciosHeader.eyebrow}</p>}
           <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:22ch;">
-            {home.serviciosHeader.heading}
+            {home.serviciosHeader?.heading ?? 'Servicios'}
           </h2>
         </div>
         <a href="/servicios" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);"
@@ -166,9 +169,9 @@ const heroLines = home.hero.heading.split('\n');
     <div class="container">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
         <div>
-          <p class="eyebrow">{home.proyectosHeader.eyebrow}</p>
+          {home.proyectosHeader?.eyebrow && <p class="eyebrow">{home.proyectosHeader.eyebrow}</p>}
           <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:20ch;">
-            {home.proyectosHeader.heading}
+            {home.proyectosHeader?.heading ?? 'Proyectos'}
           </h2>
         </div>
         <a href="/proyectos" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);"
@@ -186,8 +189,8 @@ const heroLines = home.hero.heading.split('\n');
 
   <section class="sectors-band">
     <div class="container">
-      <p class="eyebrow">{home.sectoresHeader.eyebrow}</p>
-      <h2>{home.sectoresHeader.heading}</h2>
+      {home.sectoresHeader?.eyebrow && <p class="eyebrow">{home.sectoresHeader.eyebrow}</p>}
+      <h2>{home.sectoresHeader?.heading ?? 'Sectores'}</h2>
       <div class="chip-row">
         {sectors.map((sector) => <span class="chip">{sector.name}</span>)}
       </div>
@@ -198,9 +201,9 @@ const heroLines = home.hero.heading.split('\n');
     <div class="container">
       <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;">
         <div>
-          <p class="eyebrow">{home.insightsHeader.eyebrow}</p>
+          {home.insightsHeader?.eyebrow && <p class="eyebrow">{home.insightsHeader.eyebrow}</p>}
           <h2 style="font-size:29px; font-weight:700; margin-top:10px; max-width:22ch;">
-            {home.insightsHeader.heading}
+            {home.insightsHeader?.heading ?? 'Insights'}
           </h2>
         </div>
         <a href="/insights" style="font-family:var(--font-mono); font-size:12.5px; color:var(--blue);"
