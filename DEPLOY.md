@@ -99,6 +99,19 @@ BASE_URL=http://<IP_DEL_VPS>:1337 STRAPI_API_TOKEN=<el-token> \
 
 3. Borra el token después de usarlo (Settings → API Tokens).
 
+⚠️ Si el sitio ya recibió alguna visita **antes** de correr el seed (por
+ejemplo mientras probabas que todo cargó bien en el paso 5), esas
+páginas quedaron cacheadas en `web` como "sin contenido" — vas a seguir
+viendo error 500 después de sembrar hasta que el caché se limpie. Dos
+formas de resolverlo: configura el webhook del [paso
+8](#8-configurar-el-caché-webhook-de-strapi) *antes* de sembrar, para
+que cada entrada creada lo limpie sola, o si no, llama al endpoint una
+vez a mano al terminar:
+
+```bash
+curl -X POST http://<IP_DEL_VPS>/api/revalidate -H "Content-Type: application/json" -H "X-Revalidate-Secret: <tu-REVALIDATE_SECRET>" -d '{}'
+```
+
 ## 7. Verificar
 
 - Sitio: `http://<IP_DEL_VPS>`
