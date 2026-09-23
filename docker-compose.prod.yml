@@ -58,6 +58,7 @@ services:
       PORT: 4321
       STRAPI_URL: http://cms:1337
       PUBLIC_STRAPI_URL: ${PUBLIC_STRAPI_URL}
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET}
     depends_on: [cms]
     networks: [internal]
 

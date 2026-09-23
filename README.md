@@ -19,6 +19,18 @@ CMS.
 
 Para desplegar esto en un VPS con Docker, ver [`DEPLOY.md`](DEPLOY.md).
 
+## Caché
+
+`web` guarda en memoria lo que lee de Strapi — no vuelve a pedirlo hasta
+que Strapi le avisa que algo cambió. Ese aviso es un webhook: al hacer
+Publish/editar/borrar cualquier entrada, Strapi le pega a
+`web/src/pages/api/revalidate.ts`, que vacía el caché. No hay que
+recordar invalidar nada a mano; el contenido nuevo aparece en la
+siguiente visita. Configuración del webhook: ver el paso 8 de
+[`DEPLOY.md`](DEPLOY.md#8-configurar-el-caché-webhook-de-strapi). Como
+respaldo, por si el webhook no llega a dispararse, el caché igual expira
+solo a la hora.
+
 ## Cómo correrlo localmente
 
 ```bash

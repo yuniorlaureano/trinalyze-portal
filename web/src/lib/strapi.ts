@@ -20,17 +20,37 @@ interface StrapiSingleResponse<T> {
   data: T | null;
 }
 
+// In-process cache for GET responses, keyed by request path. There's no
+// TTL: entries live until a Strapi webhook calls invalidateCache() on
+// publish/update/delete (see /api/revalidate), which clears everything.
+// A one-hour safety-net TTL guards against a webhook that never fires
+// (misconfigured URL, network blip) so content can't go stale forever.
+const SAFETY_NET_TTL_MS = 60 * 60 * 1000;
+const cache = new Map<string, { value: unknown; cachedAt: number }>();
+
+export function invalidateCache(): void {
+  cache.clear();
+}
+
 async function request<T>(path: string): Promise<T> {
+  const cached = cache.get(path);
+  if (cached && Date.now() - cached.cachedAt < SAFETY_NET_TTL_MS) {
+    return cached.value as T;
+  }
+
   const res = await fetch(`${STRAPI_URL}${path}`);
   if (res.status === 404) {
     // Single types with no entry yet come back 404 — treat as "no data"
     // rather than throwing, so a page can still render with a fallback.
+    cache.set(path, { value: null, cachedAt: Date.now() });
     return null as T;
   }
   if (!res.ok) {
     throw new Error(`Strapi request failed: GET ${path} -> ${res.status}`);
   }
-  return res.json();
+  const data = await res.json();
+  cache.set(path, { value: data, cachedAt: Date.now() });
+  return data;
 }
 
 // ---------- shared components ----------

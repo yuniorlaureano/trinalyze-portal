@@ -62,6 +62,8 @@ Completa:
 - `APP_KEYS`, `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `JWT_SECRET`,
   `TRANSFER_TOKEN_SALT`, `ENCRYPTION_KEY` — los que generaste en el paso 2.
 - `PUBLIC_STRAPI_URL` — `http://<IP_DEL_VPS>:1337` (sin dominio todavía).
+- `REVALIDATE_SECRET` — genera uno con `openssl rand -hex 32`. Lo vas a
+  volver a usar en el paso 8 (caché) al configurar el webhook en Strapi.
 
 ## 4. Levantar el stack
 
@@ -103,6 +105,41 @@ BASE_URL=http://<IP_DEL_VPS>:1337 STRAPI_API_TOKEN=<el-token> \
 - Admin de Strapi: `http://<IP_DEL_VPS>:1337/admin`
 - Formulario de contacto: envía una prueba desde `/contacto` y confírmala
   en **Content Manager → Contact Submission**.
+
+## 8. Configurar el caché (webhook de Strapi)
+
+El sitio guarda en memoria lo que lee de Strapi, para no consultarlo en
+cada visita. Ese caché se vacía solo cuando Strapi avisa que algo cambió
+— así que hace falta configurar ese aviso una vez:
+
+1. Entra al panel de Strapi: **Settings → Webhooks → Create new webhook**.
+2. **Name**: `Revalidate web cache` (o el nombre que prefieras).
+3. **URL**: `http://web:4321/api/revalidate` — usa el nombre del servicio
+   Docker (`web`), no la IP pública: Strapi y el sitio están en la misma
+   red interna, así que no hace falta pasar por Caddy ni por el dominio.
+4. **Headers**: agrega uno — `X-Revalidate-Secret` con el mismo valor que
+   pusiste en `REVALIDATE_SECRET` (paso 3). Va en un header y no en la
+   URL para que no quede en logs de acceso.
+5. **Events**: marca `Entry create`, `Entry update`, `Entry delete`,
+   `Entry publish` y `Entry unpublish` para todos los content types
+   (Select all).
+6. Guarda. Strapi le pega automáticamente a esa URL cada vez que alguien
+   publica o edita algo, y el sitio refleja el cambio en la siguiente
+   visita — sin esperar ningún tiempo fijo.
+
+Si el webhook llegara a fallar por lo que sea (URL mal escrita, el
+servicio `web` caído en ese momento), el caché tiene un límite de
+seguridad de 1 hora: nunca queda desactualizado para siempre, como
+máximo tarda ese tiempo en refrescarse solo.
+
+Para probar el endpoint a mano (fuera del botón "Trigger" de Strapi),
+usa `Content-Type: application/json` — Astro rechaza como posible CSRF
+cualquier POST sin ese header, y así es exactamente como Strapi envía
+sus webhooks, así que no hace falta tocar nada:
+
+```bash
+curl -X POST http://localhost:4321/api/revalidate -H "Content-Type: application/json" -d '{}'
+```
 
 ## Actualizar el sitio (después de un cambio en el repo)
 
