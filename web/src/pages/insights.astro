@@ -35,7 +35,11 @@ const { posts, pageCount, total } = postsPage;
 const pageNumbers = Array.from({ length: pageCount }, (_, i) => i + 1);
 ---
 
-<Layout title="Insights" active="insights">
+<Layout
+  title="Insights"
+  description={insightsPage.header?.dek ?? 'Artículos sobre datos, inteligencia artificial, automatización y business intelligence de TRINALYZE.'}
+  active="insights"
+>
   <section class="page-header">
     <div class="container">
       {insightsPage.header?.eyebrow && <p class="eyebrow">{insightsPage.header.eyebrow}</p>}

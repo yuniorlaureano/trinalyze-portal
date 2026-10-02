@@ -17,7 +17,11 @@ const formattedDate = post?.publishedDate
   : null;
 ---
 
-<Layout title={post ? post.title : 'Artículo no encontrado'} active="insights">
+<Layout
+  title={post ? post.title : 'Artículo no encontrado'}
+  description={post?.excerpt ?? 'Este artículo no está disponible.'}
+  active="insights"
+>
   {post ? (
     <>
       <section class="page-header">

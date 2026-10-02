@@ -17,7 +17,11 @@ const GRADIENTS = [
 ];
 ---
 
-<Layout title="Equipo" active="equipo">
+<Layout
+  title="Equipo"
+  description={page.header?.dek ?? 'Conoce al equipo directivo de TRINALYZE SRL: tecnología, inteligencia artificial, automatización y business intelligence.'}
+  active="equipo"
+>
   <section class="page-header">
     <div class="container">
       {page.header?.eyebrow && <p class="eyebrow">{page.header.eyebrow}</p>}

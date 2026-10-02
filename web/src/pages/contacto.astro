@@ -10,7 +10,11 @@ if (!page) {
 }
 ---
 
-<Layout title="Contacto" active="contacto">
+<Layout
+  title="Contacto"
+  description={page.header?.dek ?? 'Contáctanos para conversar sobre tu proyecto de datos, tecnología o inteligencia artificial.'}
+  active="contacto"
+>
   <section class="section" style="padding-top:64px;">
     <div class="container grid-2">
       <div>

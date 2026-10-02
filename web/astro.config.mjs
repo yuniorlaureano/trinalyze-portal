@@ -6,6 +6,10 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
+  // Canonical production origin — used to build absolute URLs for
+  // canonical links, Open Graph tags, and the sitemap.
+  site: 'https://trinalyze.com',
+
   // Every page renders per-request against live Strapi content — without
   // this, Astro prerenders pages to static HTML at build time and edits
   // made in Strapi would never show up until the next rebuild.

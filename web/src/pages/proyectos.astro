@@ -11,7 +11,11 @@ if (!page) {
 }
 ---
 
-<Layout title="Proyectos" active="proyectos">
+<Layout
+  title="Proyectos"
+  description={page.header?.dek ?? 'Casos de implementación de datos, tecnología e inteligencia artificial en empresas de República Dominicana.'}
+  active="proyectos"
+>
   <section class="page-header">
     <div class="container">
       {page.header?.eyebrow && <p class="eyebrow">{page.header.eyebrow}</p>}

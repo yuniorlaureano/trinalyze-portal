@@ -13,7 +13,11 @@ const PHASE_COLOR = ['var(--ink-faint)', 'var(--ink-faint)', 'var(--blue)', 'var
 const phases = page.phases ?? [];
 ---
 
-<Layout title="Soluciones" active="soluciones">
+<Layout
+  title="Soluciones"
+  description={page.header?.dek ?? 'Cómo trabajamos: del diagnóstico a la implementación, con soluciones de datos y tecnología por sector.'}
+  active="soluciones"
+>
   <section class="page-header">
     <div class="container">
       {page.header?.eyebrow && <p class="eyebrow">{page.header.eyebrow}</p>}

@@ -25,7 +25,11 @@ const heroLines = (home.hero?.heading ?? '').split('\n');
 const stats = home.queHacemos?.stats ?? [];
 ---
 
-<Layout title="Datos, Tecnología, Estrategia" active="inicio">
+<Layout
+  title="Datos, Tecnología, Estrategia"
+  description={home.hero?.lede ?? 'Consultoría tecnológica, inteligencia artificial, automatización y business intelligence en República Dominicana.'}
+  active="inicio"
+>
   <section class="hero">
     <svg class="hero-bg" width="900" height="760" viewBox="0 0 900 760" aria-hidden="true">
       <polygon points="620,40 900,560 340,560" fill="#FFFFFF" opacity="0.05"></polygon>

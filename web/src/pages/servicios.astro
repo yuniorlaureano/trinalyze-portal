@@ -11,7 +11,11 @@ if (!page) {
 }
 ---
 
-<Layout title="Servicios" active="servicios">
+<Layout
+  title="Servicios"
+  description={page.header?.dek ?? 'Dashboards, desarrollo de software, inteligencia artificial y automatización de procesos para empresas en República Dominicana.'}
+  active="servicios"
+>
   <section class="page-header">
     <div class="container">
       {page.header?.eyebrow && <p class="eyebrow">{page.header.eyebrow}</p>}

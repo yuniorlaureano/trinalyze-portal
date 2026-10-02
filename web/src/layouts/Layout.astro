@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { getSiteSettings } from '../lib/strapi';
 
 interface Props {
   title: string;
@@ -13,6 +14,30 @@ const {
   description = 'Consultoría tecnológica, inteligencia artificial, automatización y business intelligence en República Dominicana.',
   active,
 } = Astro.props;
+
+const fullTitle = `${title} — TRIN∆LYZE`;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL('/assets/logo-official.jpg', Astro.site);
+
+// Reused for the JSON-LD "sameAs" list below — it's the same data
+// Footer.astro renders, just read again here (cheap: same in-process
+// cache as every other Strapi read in this app).
+const settings = await getSiteSettings();
+const sameAs = (settings?.footerSocialLinks ?? []).map((link) => link.href).filter((href) => href && href !== '#');
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'TRINALYZE SRL',
+  url: Astro.site?.toString(),
+  logo: ogImageUrl.toString(),
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Santo Domingo',
+    addressCountry: 'DO',
+  },
+  ...(sameAs.length > 0 && { sameAs }),
+};
 ---
 
 <!doctype html>
@@ -20,14 +45,28 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} — TRIN∆LYZE</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href="/assets/logo-official.jpg" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
     />
     <link rel="stylesheet" href="/styles/global.css" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TRIN∆LYZE" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
   </head>
   <body>
     <Nav active={active} />
