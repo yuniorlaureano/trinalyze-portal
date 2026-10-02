@@ -154,6 +154,26 @@ sus webhooks, así que no hace falta tocar nada:
 curl -X POST http://localhost:4321/api/revalidate -H "Content-Type: application/json" -d '{}'
 ```
 
+## 9. Dar de alta el sitio en Google (Search Console)
+
+El código ya expone `/sitemap.xml`, `/robots.txt` y metadatos SEO (ver
+[README.md](README.md)), pero eso no hace que Google lo indexe solo —
+sin este paso, un sitio nuevo puede tardar semanas en aparecer en
+búsquedas aunque todo el SEO técnico esté bien hecho:
+
+1. Entra a [Google Search Console](https://search.google.com/search-console)
+   con la cuenta de Google de la empresa.
+2. Agrega la propiedad `trinalyze.com` — Google pide verificar que el
+   dominio es suyo, normalmente con un registro TXT en el DNS (lo más
+   simple) o subiendo un archivo HTML al sitio.
+3. Ya verificado, ve a **Sitemaps** y envía `https://trinalyze.com/sitemap.xml`.
+4. En **Inspección de URLs**, pega `https://trinalyze.com/` y haz clic
+   en "Solicitar indexación" — así Google lo rastrea de inmediato en vez
+   de esperar a descubrirlo solo.
+
+Esto se hace una sola vez por dominio, no hace falta repetirlo en cada
+despliegue.
+
 ## Actualizar el sitio (después de un cambio en el repo)
 
 ```bash
