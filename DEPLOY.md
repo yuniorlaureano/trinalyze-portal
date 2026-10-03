@@ -127,9 +127,18 @@ cada visita. Ese caché se vacía solo cuando Strapi avisa que algo cambió
 
 1. Entra al panel de Strapi: **Settings → Webhooks → Create new webhook**.
 2. **Name**: `Revalidate web cache` (o el nombre que prefieras).
-3. **URL**: `http://web:4321/api/revalidate` — usa el nombre del servicio
-   Docker (`web`), no la IP pública: Strapi y el sitio están en la misma
-   red interna, así que no hace falta pasar por Caddy ni por el dominio.
+3. **URL**: `http://<IP_DEL_VPS>/api/revalidate` (o `http://<tu-dominio>/api/revalidate`
+   una vez que tengan uno) — pasando por Caddy en el puerto 80, igual que
+   un visitante normal.
+   ⚠️ No uses el nombre interno de Docker (`http://web:4321/api/revalidate`)
+   aunque `cms` y `web` estén en la misma red y sea alcanzable en teoría:
+   Strapi valida que la URL del webhook sea pública (protección contra
+   SSRF) y rechaza cualquier host que resuelva a una IP privada —
+   incluyendo la IP interna que Docker le asigna a `web` dentro de su red.
+   Por la misma razón, si prueban esto en una red local/LAN antes de
+   llegar al VPS, usar la IP de esa LAN (ej. `192.168.x.x`, `10.x.x.x`)
+   tampoco va a funcionar — ese chequeo solo acepta IPs/dominios
+   públicos de verdad.
 4. **Headers**: agrega uno — `X-Revalidate-Secret` con el mismo valor que
    pusiste en `REVALIDATE_SECRET` (paso 3). Va en un header y no en la
    URL para que no quede en logs de acceso.
@@ -151,7 +160,7 @@ cualquier POST sin ese header, y así es exactamente como Strapi envía
 sus webhooks, así que no hace falta tocar nada:
 
 ```bash
-curl -X POST http://localhost:4321/api/revalidate -H "Content-Type: application/json" -d '{}'
+curl -X POST http://<IP_DEL_VPS>/api/revalidate -H "Content-Type: application/json" -d '{}'
 ```
 
 ## 9. Dar de alta el sitio en Google (Search Console)
