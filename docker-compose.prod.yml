@@ -59,6 +59,13 @@ services:
       STRAPI_URL: http://cms:1337
       PUBLIC_STRAPI_URL: ${PUBLIC_STRAPI_URL}
       REVALIDATE_SECRET: ${REVALIDATE_SECRET}
+    volumes:
+      # Shares the built static files (public/assets, public/styles, the
+      # hashed _astro/* JS/CSS chunks) with caddy, so Caddy can serve them
+      # directly instead of proxying every image/CSS request through the
+      # single Node process — see the Caddyfile. Docker auto-populates an
+      # empty named volume from the image's contents on first mount.
+      - web_static:/app/dist/client
     depends_on: [cms]
     networks: [internal]
 
@@ -71,6 +78,7 @@ services:
       - "1337:1337"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
+      - web_static:/srv/static:ro
       - caddy_data:/data
       - caddy_config:/config
     depends_on: [web, cms]
@@ -82,5 +90,6 @@ networks:
 volumes:
   pgdata:
   strapi_uploads:
+  web_static:
   caddy_data:
   caddy_config:
