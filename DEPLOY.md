@@ -227,65 +227,29 @@ docker run --rm -v trinalyze-portal_pgdata:/data -v $(pwd):/backup alpine \
 docker compose -f docker-compose.prod.yml up -d --build
 ```
 
-## Extra: si despliegan con Coolify, sirvan los estáticos sin pasar por Node
+## Extra: Coolify — estáticos servidos por Caddy, sin pasar por Node
 
-`docker-compose.prod.yml` ya tiene esto resuelto (Caddy sirve
-`/assets`, `/styles`, `/_astro` y los favicons directo, sin pasar por
-`web`) — ver el `Caddyfile`. `docker-compose.coolify.yml` **no** lo
-tiene, porque ese archivo no incluye Caddy (Coolify enruta con su
-propio Traefik directo a `web:4321`).
+`docker-compose.coolify.yml` ahora incluye el mismo `caddy` que
+`docker-compose.prod.yml` (sirve `/assets`, `/styles`, `/_astro` y los
+favicons directo desde el volumen compartido `web_static`, sin pasar
+por `web`) — con una diferencia: **no publica puertos**, porque en
+Coolify el único punto de entrada público sigue siendo su propio
+Traefik.
 
-Medido localmente con la misma carga sintética en ambos: sin ese
-`Caddyfile` de por medio, una imagen estática que normalmente responde
-en ~1-2ms puede tardar 40-100ms (p50 41.5ms, p90 63.5ms, máx. 102ms)
-cuando `web` está ocupado renderizando varias páginas SSR a la vez —
-exactamente el "se queda cargando" que se nota al recargar seguido. Con
-Caddy de por medio sirviendo el estático aparte, esos mismos números
-bajan a p50 6.4ms / p90 12.6ms.
+Medido localmente con la misma carga sintética: sin Caddy de por
+medio, una imagen estática que normalmente responde en ~1-2ms podía
+tardar 40-100ms (p50 41.5ms, p90 63.5ms, máx. 102ms) cuando `web`
+estaba ocupado renderizando varias páginas SSR a la vez — exactamente
+el "se queda cargando" que se nota al recargar seguido. Con Caddy
+sirviendo el estático aparte, esos números bajan a p50 6.4ms / p90
+12.6ms — confirmado localmente en `docker-compose.coolify.yml` tal
+cual quedó (incluyendo apagar `web` por completo y comprobar que la
+imagen sigue sirviendo).
 
-Esto es opcional — el sitio funciona igual sin esto, solo que los
-estáticos compiten por el mismo proceso Node que el renderizado SSR
-bajo carga. Si en algún momento quieren aplicarlo en el VPS con
-Coolify:
-
-1. Agreguen un servicio `caddy` a `docker-compose.coolify.yml`, **sin
-   publicar puertos** (Coolify sigue siendo el único punto de entrada
-   público vía Traefik):
-
-   ```yaml
-     caddy:
-       image: caddy:2-alpine
-       restart: unless-stopped
-       volumes:
-         - ./Caddyfile:/etc/caddy/Caddyfile
-         - web_static:/srv/static:ro
-         - caddy_data:/data
-         - caddy_config:/config
-       depends_on: [web, cms]
-       networks: [internal]
-   ```
-
-   Y en `web`, agreguen el mismo volumen compartido que ya usa
-   `docker-compose.prod.yml`:
-
-   ```yaml
-     web:
-       # ...lo que ya hay...
-       volumes:
-         - web_static:/app/dist/client
-   ```
-
-   Y declaren `web_static` junto a los demás volúmenes al final del
-   archivo.
-
-2. Reutilicen el [`Caddyfile`](Caddyfile) del repo tal cual — ya está
-   escrito para servir `:80` con esa lógica de estático-vs-SSR.
-
-3. En la UI de Coolify, cambien el destino del dominio: en vez de
-   apuntar a `web` puerto `4321`, apúntenlo a `caddy` puerto `80`. Caddy
-   decide internamente qué camino toma cada request — Coolify/Traefik
-   no necesita saber la diferencia.
-
-No llegué a probar el paso 3 de punta a punta porque no tengo acceso a
-la instancia de Coolify real — verifiquen que el sitio cargue bien
-después de repuntar el dominio antes de darlo por bueno.
+**Paso pendiente, solo en la UI de Coolify** (esto no se puede hacer
+por código): cambien el destino del dominio público — en vez de
+apuntar a `web` puerto `4321`, apúntenlo a `caddy` puerto `80`. Caddy
+decide internamente qué camino toma cada request; Coolify/Traefik no
+necesita saber la diferencia. No pude probar ese repunte en sí porque
+no tengo acceso a la instancia de Coolify real — verifiquen que el
+sitio cargue bien después de hacerlo antes de darlo por bueno.

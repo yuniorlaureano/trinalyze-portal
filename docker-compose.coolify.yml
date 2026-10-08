@@ -1,10 +1,17 @@
 # Production stack for Coolify. Same services as docker-compose.prod.yml,
-# minus Caddy — Coolify runs its own reverse proxy (Traefik) and handles
-# routing/HTTPS itself, so a second reverse proxy in this file would
-# conflict with it.
+# including a `caddy` service — but unlike docker-compose.prod.yml, this
+# Caddy has no published ports. Coolify's own Traefik stays the one
+# public entry point; Caddy only exists internally, to split static
+# asset requests (images, CSS, Astro's hashed JS/CSS chunks) away from
+# the single Node process so they don't queue up behind SSR rendering
+# under load — see DEPLOY.md's "Extra" section for the measurements.
 #
-# Configure the public domain/port for each service (cms, web) from the
-# Coolify UI — that's what replaces the Caddyfile here.
+# In the Coolify UI, point the public domain at the `caddy` service on
+# port 80 (not at `web` on port 4321) — Caddy decides internally which
+# requests go straight to a static file and which go to `web`.
+#
+# Configure cms's public domain/port from the Coolify UI same as before
+# — that part is unchanged.
 #
 # Env vars (DATABASE_*, APP_KEYS, PUBLIC_STRAPI_URL, etc.) are the same
 # ones documented in .env.production.example / DEPLOY.md — set them as
@@ -61,7 +68,25 @@ services:
       STRAPI_URL: http://cms:1337
       PUBLIC_STRAPI_URL: ${PUBLIC_STRAPI_URL}
       REVALIDATE_SECRET: ${REVALIDATE_SECRET}
+    volumes:
+      # Shared with caddy below — see the top-of-file comment and
+      # DEPLOY.md's "Extra" section.
+      - web_static:/app/dist/client
     depends_on: [cms]
+    networks: [internal]
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    # No `ports:` on purpose — Coolify's Traefik is the only public
+    # entry point. Point your domain at this service, port 80, from the
+    # Coolify UI.
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - web_static:/srv/static:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [web, cms]
     networks: [internal]
 
 networks:
@@ -70,3 +95,6 @@ networks:
 volumes:
   pgdata:
   strapi_uploads:
+  web_static:
+  caddy_data:
+  caddy_config:
